@@ -11,6 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
     "sourceMap": true,
+     "noImplicitAny": false,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */
     "baseUrl": ".",
     "types": [
       "webpack-env"

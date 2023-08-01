@@ -1,120 +1,65 @@
-import { RowDataPacket } from "mysql2";
-import { dataSource } from "../config/ConnectDataSource"
-import { Connection } from "../db/ConnectionDB"
-import QueryParams from "../interfaces/QueryParamsInterface";
+import { Model, Document } from 'mongoose';
+import { LeanDocument } from 'mongoose';
 
-type DTO = { [key: string]: any };
+abstract class QueriesCommon<ModelType extends Document> {
+    protected model: Model<ModelType>;
 
-abstract class QueriesCommon<InputDTO extends DTO, OutputDTO extends DTO> extends Connection {
+    constructor(model: Model<ModelType>) {
+        this.model = model;
+    }
 
-    protected async getAll(queryParams: QueryParams): Promise<OutputDTO[]> {
-        const connection = await dataSource.getConnection();
-        const query = `
-        SELECT ${queryParams.select ?? "*"}
-        FROM ${queryParams.table}
-        ${queryParams.joins ?? ""}
-        ${queryParams.where ?? ""}
-        ${queryParams.orderBy ?? ""}
-        ${queryParams.limit ?? ""}`;
-
+    protected async getAll(): Promise<LeanDocument<ModelType>[]> {
         try {
-            const connect = await this.connect;
-            const [rows] = await connect.query<RowDataPacket[]>(query);
-            const dtos: OutputDTO[] = this.mapRowToDTO(rows);
-            return dtos
+            const query = this.model.find().lean();
+            const docs: LeanDocument<ModelType>[] = await query.exec();
+            return docs;
         } catch (error) {
-            console.error("Error executing query:", error);
-            throw new Error("Error executing query");
-        } finally {
-            connection.release();
+            console.error('Error executing query:', error);
+            throw new Error('Error executing query');
         }
     }
 
-    protected async getOneById(id: number, queryParams: QueryParams): Promise<OutputDTO | null> {
-        const connection = await dataSource.getConnection();
-        const query = `
-        SELECT ${queryParams.select ?? "*"}
-        FROM ${queryParams.table}
-        ${queryParams.joins ?? ""}
-        WHERE ${queryParams.table}.id = ${queryParams.where ?? ""}
-        `;
-
+    protected async getOneById(id: number ): Promise<any> {
         try {
-            const connect = await this.connect;
-            const [rows] = await connect.query<RowDataPacket[]>(query, [id]);
-            const dtos: OutputDTO[] = this.mapRowToDTO(rows);
-            return dtos.length > 0 ? dtos[0] : null;
+            const query = this.model.findById(id).lean();
+            const doc: any = await query.exec();
+            return doc;
         } catch (error) {
-            console.error("Error executing query:", error);
-            throw new Error("Error executing query");
-        } finally {
-            connection.release();
+            console.error('Error executing query:', error);
+            throw new Error('Error executing query');
         }
     }
 
-    protected async insert(dto: InputDTO, queryParams: QueryParams): Promise<string> {
-        const connection = await dataSource.getConnection();
-
-        const columns = Object.keys(dto).join(",");
-        const placeholders = Object.keys(dto).map(() => "?").join(",");
-        const values = Object.values(dto);
-
-
-        const query = `
-            INSERT INTO ${queryParams.table} (${columns})
-            VALUES (${placeholders})`;
+    protected async insert(doc: ModelType): Promise<string> {
         try {
-            const connect = await this.connect;
-            await connect.query<RowDataPacket[]>(query, values);
-            return `Insertado correrctamente :D`;
+            await this.model.create(doc);
+            return 'Insertado correctamente :D';
         } catch (error) {
-            console.error("Error executing query:", error);
-            throw new Error("Error executing query");
-        } finally {
-            connection.release();
+            console.error('Error executing query:', error);
+            throw new Error('Error executing query');
         }
     }
 
-    protected async put(id: number, dto: InputDTO, queryParams: QueryParams): Promise<string> {
-        const connection = await dataSource.getConnection();
-        const columns = Object.keys(dto).join("=?, ") + "=?";
-        const values = Object.values(dto);
-        values.push(id);
-
-        const query = `
-            UPDATE ${queryParams.table}
-            SET ${columns}
-            WHERE id=?`;
-
+    protected async put(id: number, doc: ModelType): Promise<string> {
         try {
-            const connect = await this.connect;
-            await connect.query<RowDataPacket[]>(query, values);
-            return `Actualizado correctamente :D`;
+            const updates: Partial<ModelType> = doc;
+            await this.model.findByIdAndUpdate(id, updates);
+            return 'Actualizado correctamente :D';
         } catch (error) {
-            console.error("Error executing query:", error);
-            throw new Error("Error executing query");
-        } finally {
-            connection.release();
+            console.error('Error executing query:', error);
+            throw new Error('Error executing query');
         }
     }
 
-    protected async delete(queryParams: QueryParams): Promise<string> {
-        const connection = await dataSource.getConnection();
-        const query = `
-        DELETE FROM ${queryParams.table}
-        WHERE id = ${queryParams.where}`;
+    protected async delete(id:number): Promise<string> {
         try {
-            const connect = await this.connect;
-            await connect.query<RowDataPacket[]>(query, [queryParams.where]);
-            return `${queryParams.table} eliminado correctamnte :D`;
+            await this.model.findByIdAndDelete(id);
+            return `${this.model.collection.name} eliminado correctamente :D`;
         } catch (error) {
-            console.error("Error executing query:", error);
-            throw new Error("Error executing query");
-        } finally {
-            connection.release();
+            console.error('Error executing query:', error);
+            throw new Error('Error executing query');
         }
     }
-
-    protected abstract mapRowToDTO(rows: RowDataPacket[]): OutputDTO[];
 }
-export default QueriesCommon
+
+export default QueriesCommon;
