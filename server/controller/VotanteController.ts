@@ -12,8 +12,8 @@ export class VotanteController {
             const Votantes = await this.service.getAllVotantes();
             res.json(Votantes);
         } catch (error) {
-            console.error('Error al obtener las categorías:', error);
-            res.status(500).json({ error: 'Ocurrió un error al obtener las categorías, revise la consola para más información' });
+            console.error('Error al obtener los votantes:', error);
+            res.status(500).json({ error: 'Ocurrió un error al obtener los votantes, revise la consola para más información' });
 
         }
     }
@@ -24,8 +24,8 @@ export class VotanteController {
             const Votante = await this.service.getVotanteByID(body);
             res.json(Votante);
         } catch (error) {
-            console.error('Error al obtener la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al obtener la categoría, revise la consola para más información' });
+            console.error('Error al obtener el votante:', error);
+            res.status(500).json({ error: 'Ocurrió un error al obtener el votante, revise la consola para más información' });
         }
     }
 
@@ -35,8 +35,8 @@ export class VotanteController {
             const newVotante = await this.service.insertVotante(body);
             res.json(newVotante);
         } catch (error) {
-            console.error('Error al insertar la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al insertar la categoría, revise la consola para más información' });
+            console.error('Error al insertar el votante:', error);
+            res.status(500).json({ error: 'Ocurrió un error al insertar el votante, revise la consola para más información' });
         }
     }
 
@@ -46,8 +46,8 @@ export class VotanteController {
             const updated = await this.service.updateVotante(body);
             res.json(updated)
         } catch (error) {
-            console.error('Error al actualizar la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al actualizar la categoría, revise la consola para más información' });
+            console.error('Error al actualizar el votante:', error);
+            res.status(500).json({ error: 'Ocurrió un error al actualizar el votante, revise la consola para más información' });
         }
     }
 
@@ -57,8 +57,8 @@ export class VotanteController {
             const deleted = await this.service.deleteVotante(body);
             res.json(deleted)
         } catch (error) {
-            console.error('Error al eliminar la categoría:', error);
-            res.status(500).json({ error: 'Ocurrió un error al eliminar la categoría, revise la consola para más información' });
+            console.error('Error al eliminar el votante:', error);
+            res.status(500).json({ error: 'Ocurrió un error al eliminar el votante, revise la consola para más información' });
         }
     }
 }
