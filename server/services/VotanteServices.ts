@@ -1,5 +1,4 @@
 import VotanteRepository, { votanteRepository } from "../repositories/VotanteRepository";
-import { verifyJWT } from "../common/FunctionsCommon";
 
 class VotanteServices {
     private repository: VotanteRepository;
@@ -12,25 +11,22 @@ class VotanteServices {
         return this.repository.getAllVotantes();
     }
 
-    public async getVotanteByID(token: string): Promise<any> {
-        const body = await verifyJWT(token);
+    public async getVotanteByID(body: any): Promise<any> {
         const id = body.id;
         return this.repository.getVotanteById(id);
     }
 
-    public async insertVotante(token: string): Promise<string> {
-        return this.repository.insertVotante(await verifyJWT(token));
+    public async insertVotante(body: any): Promise<string> {
+        return this.repository.insertVotante(body);
     }
 
-    public async updateVotante(token: string): Promise<any> {
-        const body = await verifyJWT(token);
+    public async updateVotante(body: any): Promise<any> {
         const id = body.id;
         delete body.id;
         return this.repository.updateVotante(id, body);
     }
 
-    public async deleteVotante(token: string): Promise<string> {
-        const body = await verifyJWT(token);
+    public async deleteVotante(body: any): Promise<string> {
         const id = body.id;
         return this.repository.deleteVotante(id);
     }

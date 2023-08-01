@@ -1,16 +1,20 @@
 import { Model, Document } from 'mongoose';
 import { LeanDocument } from 'mongoose';
+import {ConnectionDB} from "../db/ConnectionDB";
 
 abstract class QueriesCommon<ModelType extends Document> {
     protected model: Model<ModelType>;
+    private connection: ConnectionDB;
 
     constructor(model: Model<ModelType>) {
         this.model = model;
+        this.connection = new ConnectionDB();
     }
 
     protected async getAll(): Promise<LeanDocument<ModelType>[]> {
         try {
-            const query = this.model.find().lean();
+            await this.connection.connect();
+            const query = this.model.find();
             const docs: LeanDocument<ModelType>[] = await query.exec();
             return docs;
         } catch (error) {
@@ -21,7 +25,7 @@ abstract class QueriesCommon<ModelType extends Document> {
 
     protected async getOneById(id: number ): Promise<any> {
         try {
-            const query = this.model.findById(id).lean();
+            const query = this.model.findById(id);
             const doc: any = await query.exec();
             return doc;
         } catch (error) {
@@ -32,6 +36,7 @@ abstract class QueriesCommon<ModelType extends Document> {
 
     protected async insert(doc: ModelType): Promise<string> {
         try {
+            await this.connection.connect();
             await this.model.create(doc);
             return 'Insertado correctamente :D';
         } catch (error) {

@@ -27,10 +27,19 @@ class VotanteSchema {
         trim: true
       }
     });
+
+    this.schema.set('toJSON', {
+      transform: (_document, returnedObject) => {
+        returnedObject.id = returnedObject._id
+        delete returnedObject._id
+        delete returnedObject.__v
+      }
+    });
   }
 
   public getModel() {
-    return model<IVotante>('Votante', this.schema);
+    const votante = model<IVotante>('Votante', this.schema);
+    return votante;
   }
 }
 

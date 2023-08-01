@@ -3,10 +3,8 @@ import { Request, Response } from "express";
 
 export class VotanteController {
     private readonly service: VotanteServices;
-    private cookie: string;
     constructor() {
         this.service = votanteServices;
-        this.cookie = 'token';
     }
 
     public getAllVotante = async (_req: Request, res: Response) => {
@@ -22,9 +20,8 @@ export class VotanteController {
 
     public getVotanteById = async (req: Request, res: Response) => {
         try {
-            const token = await req.cookies.token;
-            const Votante = await this.service.getVotanteByID(token);
-            res.clearCookie(this.cookie);
+            const body = await req.body;
+            const Votante = await this.service.getVotanteByID(body);
             res.json(Votante);
         } catch (error) {
             console.error('Error al obtener la categoría:', error);
@@ -34,9 +31,8 @@ export class VotanteController {
 
     public insertVotante = async (req: Request, res: Response) => {
         try {
-            const token = await req.cookies.token;
-            const newVotante = await this.service.insertVotante(token);
-            res.clearCookie(this.cookie);
+            const body = await req.body;
+            const newVotante = await this.service.insertVotante(body);
             res.json(newVotante);
         } catch (error) {
             console.error('Error al insertar la categoría:', error);
@@ -46,9 +42,8 @@ export class VotanteController {
 
     public updateVotante = async (req: Request, res: Response) => {
         try {
-            const token = await req.cookies.token;
-            const updated = await this.service.updateVotante(token);
-            res.clearCookie(this.cookie);
+            const body = await req.body;
+            const updated = await this.service.updateVotante(body);
             res.json(updated)
         } catch (error) {
             console.error('Error al actualizar la categoría:', error);
@@ -58,9 +53,8 @@ export class VotanteController {
 
     public deleteVotante = async (req: Request, res: Response) => {
         try {
-            const token = await req.cookies.token;
-            const deleted = await this.service.deleteVotante(token);
-            res.clearCookie(this.cookie)
+            const body = await req.body;
+            const deleted = await this.service.deleteVotante(body);
             res.json(deleted)
         } catch (error) {
             console.error('Error al eliminar la categoría:', error);

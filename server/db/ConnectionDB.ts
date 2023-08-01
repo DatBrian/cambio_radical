@@ -1,21 +1,24 @@
 import env from '../config/EnvConfig';
-import { connect } from 'mongoose';
+import { connect, Connection } from 'mongoose';
 
 const user = env.DB_USER;
 const password = env.DB_PASSWORD;
-const dbName = env.DB_NAME
+const dbName = env.DB_NAME;
 const uri = `mongodb+srv://${user}:${password}@${dbName}.diqj3vd.mongodb.net/?retryWrites=true&w=majority`;
 
-class Connection {
-    protected connect;
+class ConnectionDB {
+    private mongooseConnection: Connection | null | any;
 
     constructor() {
-        this.connect = connect(uri);
+        this.mongooseConnection = null;
     }
 
-    async getConnection() {
-        return this.connect;
+    public async connect() {
+        if (!this.mongooseConnection) {
+            this.mongooseConnection = await connect(uri);
+        }
+        return this.mongooseConnection;
     }
 }
 
-export { Connection };
+export {ConnectionDB};

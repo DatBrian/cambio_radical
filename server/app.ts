@@ -8,10 +8,10 @@ import morgan from "morgan";
 import cors from 'cors'
 import { authJWTMiddleware } from "./middleware/AuthJTWMiddleware";
 import { authRoutes } from "./routes/AuthRoutes";
-import { Connection } from "./db/ConnectionDB";
+import { ConnectionDB } from "./db/ConnectionDB";
 
 
-class App extends Connection {
+class App extends ConnectionDB {
     public app: Application;
     public port: number;
     public server: any;
@@ -37,10 +37,10 @@ class App extends Connection {
 
     private async initConnection() {
         try {
-            const connection = await this.connect;
+            const connection = await this.connect();
             console.log(chalk.bgGreen.black('✔️  Conexión establecida 🔌 '));
             console.log(chalk.blue('---------------------------------------------------------------------------------'));
-            console.log(chalk.green.bold(`🌐 ¡Se ha establecido la conexión a: ${env.DB_NAME} en el host: ${env.DB_HOST}!`));
+            console.log(chalk.green.bold(`🌐 ¡Se ha establecido la conexión a: ${env.DB_NAME}!`));
             console.log(chalk.blue('---------------------------------------------------------------------------------'));
             return connection;
 
