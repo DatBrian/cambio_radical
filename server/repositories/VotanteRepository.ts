@@ -1,7 +1,7 @@
 import QueriesCommon from "../common/QueriesCommon";
 import { IVotante } from "../interfaces/VotanteInterface";
 import { Model } from 'mongoose';
-import { votanteModel } from '../model/schemas/VotanteSchema';
+import { votanteModel } from '../model/VotanteModel';
 
 class VotanteRepository extends QueriesCommon<IVotante> {
 

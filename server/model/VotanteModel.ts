@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { IVotante } from '../../interfaces/VotanteInterface';
+import { IVotante } from '../interfaces/VotanteInterface';
 
 class VotanteSchema {
   private schema: Schema<IVotante>;
