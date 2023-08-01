@@ -26,13 +26,15 @@ class VotanteSchema {
         required: true,
         trim: true
       }
+    }, {
+      timestamps: true,
+      versionKey: false
     });
 
     this.schema.set('toJSON', {
       transform: (_document, returnedObject) => {
         returnedObject.id = returnedObject._id
         delete returnedObject._id
-        delete returnedObject.__v
       }
     });
   }
