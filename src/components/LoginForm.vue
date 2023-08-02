@@ -34,6 +34,8 @@
     box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.062);
     position: relative;
     overflow: hidden;
+    opacity: 0;
+    animation: fadeIn $fadeIn-duration forwards;
 }
 
 .form_main::before {
@@ -41,13 +43,15 @@
   content: "";
   width: em(110);
   height:em(110);
-  background-color: $blue;
+  background-color: $_blue;
   transform: rotate(45deg);
   left: em(-45);
   bottom: em(-5);
   z-index: 1;
   border-radius: 30px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.082);
+  opacity: 0;
+  animation: fadeIn $fadeIn-duration forwards;
 }
 
 .heading {
@@ -127,6 +131,12 @@
   text-decoration: none;
   padding: 8px 15px;
   border-radius: 20px;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 </style>

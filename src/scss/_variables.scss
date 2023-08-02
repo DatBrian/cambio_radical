@@ -1,7 +1,16 @@
 $blue: #7C6EEB;
 $red: #ff6752;
 $white: #ffece1;
+
+$opacity: .8;
+
+$_blue: rgba($blue, $opacity);
+
 $base-size: 10px;
+
+$fadeIn-duration: 2.5s;
+
+//*Functions
 @function em($value){
     @return $value * $base-size
 }
