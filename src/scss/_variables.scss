@@ -1,13 +1,17 @@
+//* Properties
+$opacity: .8;
+
+//* Colors
 $blue: #7C6EEB;
+$_blue: rgba($blue, $opacity);
 $red: #ff6752;
 $white: #ffece1;
 
-$opacity: .8;
 
-$_blue: rgba($blue, $opacity);
-
+//* Custom
 $base-size: 10px;
 
+//* Animations
 $fadeIn-duration: 2.5s;
 
 //*Functions
