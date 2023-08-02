@@ -1,15 +1,14 @@
 import { Router } from "express";
 import RouterCommon from "../common/RouterCommon";
-import ValidateMiddlewareDTO from "../middleware/ValidateMiddlewareDTO";
 import VotanteController, { votanteController } from "../controller/VotanteController";
 
-class VotanteRoutes extends RouterCommon<VotanteController, ValidateMiddlewareDTO>{
+class VotanteRoutes extends RouterCommon<VotanteController>{
     public path: string;
     public router: Router;
     public controller: VotanteController;
 
     constructor() {
-        super(VotanteController, ValidateMiddlewareDTO);
+        super(VotanteController);
         this.path = '/votante';
         this.router = Router();
         this.controller = votanteController;

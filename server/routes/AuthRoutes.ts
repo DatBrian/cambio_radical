@@ -1,39 +1,29 @@
-import { Router, Response } from "express";
-import { authJWTMiddleware } from "../middleware/AuthJTWMiddleware";
-import { Request as CustomRequest } from '../interfaces/AuthRequestInterface'
+import { Router } from "express";
+import AuthController, { authController } from "../controller/AuthController";
+import passport from "passport";
 
 class AuthRoutes {
     public path: string;
     public router: Router;
+    protected controller:AuthController;
 
     constructor() {
-        this.path = '/token';
+        this.path = '/auth';
         this.router = Router();
+        this.controller = authController;
         this.initRoutes();
     }
 
     private initRoutes() {
-        this.router.get(`${this.path}/check`, (req: CustomRequest, res: Response) => {
-            const token = req.session.token;
-
-            const response = !token
-                ? {
-                    status: "No hay tokens activos, genere uno nuevo",
-                }
-                : {
-                    status: "Hay un token activo n.n",
-                    token: token,
-                };
-            res.json(response);
+        this.router.post(`${this.path}/signup`,
+            (req, res) => {
+            this.controller.signUp(req, res)
         });
-        this.router.post(`${this.path}/generate`, authJWTMiddleware.generateToken, (req: CustomRequest, res: Response) => {
-            const token = req.session.token;
-            res.json({
-                status: "Token generado correctamente :D",
-                token: token
-            })
-        });
-
+        this.router.post(`${this.path}/login`,
+            passport.authenticate('local', {
+                successRedirect: '/',
+                failureRedirect: '/login'
+            }));
     }
 }
 

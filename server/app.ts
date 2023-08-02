@@ -6,10 +6,10 @@ import chalk from "chalk";
 import session from "express-session";
 import morgan from "morgan";
 import cors from 'cors'
-import { authJWTMiddleware } from "./middleware/AuthJTWMiddleware";
+import { authJWTMiddleware } from "./middleware/AuthMiddleware";
 import { authRoutes } from "./routes/AuthRoutes";
 import { ConnectionDB } from "./db/ConnectionDB";
-
+import passport from "passport";
 
 class App extends ConnectionDB {
     public app: Application;
@@ -58,14 +58,16 @@ class App extends ConnectionDB {
         this.app.use(session({
             secret: 'env.JWT_PRIVATE_KEY',
             resave: false,
-            saveUninitialized: true,
+            saveUninitialized: false,
         }));
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
     }
 
     private initRoutes(routes: RoutesInterface[]) {
         this.app.use(`/api/${env.API_VERSION}`, authRoutes.router);
         routes.forEach((route) => {
-            this.app.use(`/api/${env.API_VERSION}`, authJWTMiddleware.validateToken, route.router)
+            this.app.use(`/api/${env.API_VERSION}`, route.router)
         });
     }
 
