@@ -25,10 +25,10 @@ class UsuarioSchema {
         unique:true,
         trim: true
       },
-        roles: [{
-            ref: "Role",
-            type: Schema.Types.ObjectId
-        }]
+      role: {
+          ref: "Role",
+          type: Schema.Types.ObjectId
+      }
     }, {
       timestamps: true,
       versionKey: false

@@ -12,7 +12,7 @@ passport.use(new LocalStrategy({
       return done(null, false, { message: 'Usuario no encontrado' });
     }
 
-    const isPasswordMatch = await user.schema.methods.matchPassword(password);
+    const isPasswordMatch = await user.schema.methods.matchPassword(password, user.password);
     if (isPasswordMatch) {
       return done(null, user);
     } else {
