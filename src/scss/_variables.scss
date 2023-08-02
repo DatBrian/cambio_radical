@@ -1,3 +1,7 @@
 $blue: #7C6EEB;
-$red: #FF2F12;
-$white: #E8D7CB;
+$red: #ff6752;
+$white: #ffece1;
+$base-size: 10px;
+@function em($value){
+    @return $value * $base-size
+}
