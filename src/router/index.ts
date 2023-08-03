@@ -10,8 +10,8 @@ const routes: Array<RouteRecordRaw> = [
     component: LoginView
   },
   {
-    path: '/votantesForm',
-    name: 'votantesForm',
+    path: '/votante',
+    name: 'votante',
     component: VotantesFormView
   }, {
     path: '/list',
