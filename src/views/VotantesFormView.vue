@@ -11,7 +11,7 @@
 import VotanteForm from "../components/VotanteForm.vue";
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 #container {
   width: 100%;
   display: flex;
