@@ -16,6 +16,9 @@
         <FiltrosList @showMenuBtn="toggleSidebar" />
       </div>
     </transition>
+    <div id="votantes">
+      <VotantesAll />
+    </div>
   </div>
 </template>
 
@@ -23,6 +26,7 @@
 import RegisterForm from "../components/RegisterForm.vue";
 import NavBar from "../components/NavBar.vue";
 import FiltrosList from "../components/FiltrosList.vue";
+import VotantesAll from "../components/VotantesAll.vue";
 import { ref } from "vue";
 
 const showForm = ref(false);
@@ -44,6 +48,11 @@ const toggleSidebar = () => {
   height: 100vh;
   width: 100%;
   background-color: $_blue;
+}
+
+#votantes {
+  display: flex;
+  margin-inline-start: 25%;
 }
 
 #form {
