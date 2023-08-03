@@ -72,7 +72,6 @@ const toggleSidebar = () => {
   border-radius: 5px;
   cursor: pointer;
   z-index: 10;
-  transition-duration: 0.1s;
   transition: background-color 0.8s;
   transition: color 0.8s;
 }

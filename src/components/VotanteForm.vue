@@ -1,75 +1,217 @@
 <template>
-  <form class="form">
+  <form class="form" @submit.prevent="saveVotante()">
     <p class="title">Agregar votante</p>
     <p class="message">Ingresa los datos del nuevo votante</p>
     <div class="flex">
       <label>
-        <input required placeholder="" type="text" class="input" />
+        <input
+          required
+          placeholder=""
+          type="text"
+          class="input"
+          v-model="votante.name"
+        />
         <span>nombre</span>
       </label>
 
       <label>
-        <input required placeholder="" type="text" class="input" />
+        <input
+          required
+          placeholder=""
+          type="text"
+          class="input"
+          v-model="votante.lider"
+        />
         <span>lider</span>
       </label>
     </div>
 
     <label>
-      <input required placeholder="" type="number" class="input" />
+      <input
+        required
+        placeholder=""
+        type="number"
+        class="input"
+        v-model="votante.doc"
+      />
       <span>documento</span>
     </label>
 
     <label>
-      <input required placeholder="" type="date" class="input" />
-      <span>nacimiento</span>
+      <input
+        required
+        placeholder="nacimiento"
+        type="date"
+        class="input"
+        v-model="votante.nacimiento"
+      />
     </label>
     <label>
-      <input required placeholder="" type="phone" class="input" />
+      <input
+        required
+        placeholder=""
+        type="phone"
+        class="input"
+        v-model="votante.telefono"
+      />
       <span>telefono</span>
     </label>
     <label>
-      <input required placeholder="" type="text" class="input" />
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.direccion"
+      />
       <span>dirección</span>
     </label>
     <label>
-      <input required placeholder="" type="text" class="input" />
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.barrio"
+      />
       <span>barrio</span>
     </label>
     <label>
-      <input required placeholder="" type="number" class="input" />
+      <input
+        required
+        placeholder=""
+        type="number"
+        class="input"
+        v-model="votante.comuna"
+      />
       <span>comuna</span>
     </label>
     <label>
-      <input required placeholder="" type="email" class="input" />
+      <input
+        required
+        placeholder=""
+        type="email"
+        class="input"
+        v-model="votante.email"
+      />
       <span>Email</span>
     </label>
     <label>
-      <input required placeholder="" type="text" class="input" />
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.ocupacion"
+      />
       <span>ocupacion</span>
     </label>
     <label>
-      <input required placeholder="" type="text" class="input" />
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.RS"
+      />
       <span>Redes sociales</span>
     </label>
     <label>
-      <input required placeholder="" type="text" class="input" />
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.PuestoVotacion"
+      />
       <span>Puesto de votación</span>
     </label>
     <label>
-      <input required placeholder="" type="number" class="input" />
+      <input
+        required
+        placeholder=""
+        type="number"
+        class="input"
+        v-model="votante.MesaVotacion"
+      />
       <span>Mesa de votación</span>
     </label>
     <label>
-      <input required placeholder="" type="text" class="input" />
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.compromiso"
+      />
       <span>compromiso</span>
     </label>
     <button class="submit">Submit</button>
   </form>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Ref, ref } from "vue";
+import { IVotante } from "server/interfaces/VotanteInterface";
+import Swal from "sweetalert2";
+
+const votante: Ref<IVotante> = ref({
+  name: "",
+  lider: "",
+  doc: "",
+  nacimiento: "",
+  telefono: "",
+  direccion: "",
+  barrio: "",
+  comuna: "",
+  email: "",
+  ocupacion: "",
+  RS: "",
+  PuestoVotacion: "",
+  MesaVotacion: "",
+  compromiso: "",
+});
+
+const saveVotante = async () => {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/v1/votante/create",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(votante.value),
+      }
+    );
+
+    if (response.ok) {
+      Swal.fire({
+        icon: "success",
+        title: "Votante guardado exitosamente!",
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Error al guardar el votante.",
+      });
+    }
+    setTimeout(() => {
+      location.reload();
+    }, 2000);
+  } catch (error: any) {
+    Swal.fire({
+      icon: "error",
+      title: "Error al enviar la petición.",
+      text: error.message,
+    });
+  }
+};
+</script>
 
 <style scoped lang="scss">
+@import "~sweetalert2/dist/sweetalert2.min.css";
+
 .form {
   display: flex;
   flex-direction: column;
