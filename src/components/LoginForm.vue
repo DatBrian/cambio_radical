@@ -60,7 +60,7 @@
   font-weight: 900;
   margin: 5px 0 50px 0;
   z-index: 2;
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .inputContainer {

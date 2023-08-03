@@ -1,12 +1,18 @@
 //* Properties
 $opacity: .8;
+$_opacity: .6;
 
 //* Colors
 $blue: #7C6EEB;
 $_blue: rgba($blue, $opacity);
 $red: #ff6752;
+$__red: rgba($red, $_opacity);
 $white: #ffece1;
+$green: rgb(0, 255, 94);
+$gray: rgb(207, 207, 207);
 
+//* Fonts
+$font-title: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
 //* Custom
 $base-size: 10px;
