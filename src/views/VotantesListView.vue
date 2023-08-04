@@ -6,14 +6,9 @@
         <RegisterForm />
       </div>
     </transition>
-    <transition name="aparecer">
-      <button @click="toggleSidebar" id="sidebar-button" v-if="showMenuBtn">
-        Menú
-      </button>
-    </transition>
     <transition name="slide">
-      <div id="SideBar" v-if="showSidebar">
-        <FiltrosList @showMenuBtn="toggleSidebar" />
+      <div id="SideBar">
+        <FiltrosList />
       </div>
     </transition>
     <div id="votantes">
@@ -30,16 +25,10 @@ import VotantesAll from "../components/VotantesAll.vue";
 import { ref } from "vue";
 
 const showForm = ref(false);
-const showSidebar = ref(false);
 const showMenuBtn = ref(true);
 
 const toggleForm = () => {
   showForm.value = !showForm.value;
-};
-
-const toggleSidebar = () => {
-  showSidebar.value = !showSidebar.value;
-  showMenuBtn.value = !showMenuBtn.value;
 };
 </script>
 
@@ -70,37 +59,13 @@ const toggleSidebar = () => {
   background-color: $white;
 }
 
-#sidebar-button {
-  position: fixed;
-  top: 20%;
-  left: 20px;
-  padding: 8px 16px;
-  background-color: $red;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  z-index: 10;
-  transition: background-color 0.8s;
-  transition: color 0.8s;
-}
-
-#sidebar-button:hover {
-  color: black;
-  background-color: $white;
-}
-
 #SideBar {
   width: 25%;
   display: flex;
   height: 100%;
   background-color: $gray;
-  position: fixed;
+  position: absolute;
   z-index: 5;
-}
-
-#SideBar.active {
-  left: 10;
 }
 
 //* Animaciones

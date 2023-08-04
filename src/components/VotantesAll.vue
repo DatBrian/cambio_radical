@@ -85,7 +85,7 @@ const hideDetails = () => {
 }
 
 .modal-content {
-  background-color: $white;
+  background-color: $red;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -115,17 +115,26 @@ table {
   border-collapse: collapse;
   margin-top: 20px;
   thead th {
-    background-color: $red;
+    background-color: rgb(255, 77, 77);
     border: 1px solid #ddd;
     padding: 10px;
   }
   tbody td {
-    border: 1px solid #ddd;
+    border: 1px solid black;
     padding: 10px;
     cursor: pointer;
   }
-  tbody tr:nth-child(odd) {
+  tbody tr {
+    border: 1px solid black;
     background-color: #f9f9f9;
   }
+}
+
+table tbody tr {
+  transition-duration: 0.6s;
+}
+
+table tbody tr:hover {
+  background-color: $gray;
 }
 </style>

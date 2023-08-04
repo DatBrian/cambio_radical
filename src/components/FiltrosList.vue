@@ -14,21 +14,15 @@
       <span>Comuna</span>
       <input type="number" />
     </div>
-    <div id="closeButton">
-      <button id="close" @click="showMenuBtn">Cerrar</button>
+
+    <div class="total">
+      <span>Total: </span>
+      <span>12391</span>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { defineEmits } from "vue";
-
-const emit = defineEmits(["showMenuBtn"]);
-
-const showMenuBtn = () => {
-  emit("showMenuBtn");
-};
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 #container {
@@ -50,6 +44,7 @@ span {
   font-family: $font_title;
   margin-block-end: em(1);
   font-weight: 700;
+  margin-block-start: em(1);
 }
 
 input {
@@ -63,27 +58,7 @@ input {
   transition: 300ms ease-in-out;
 }
 
-#closeButton {
-  width: 100%;
+.total {
   margin-top: em(2);
-  display: flex;
-}
-
-#close {
-  border: none;
-  padding-block: em(1.2);
-  width: 20%;
-  border-radius: 5px;
-  width: 20%;
-  background-color: $red;
-  cursor: pointer;
-  margin: auto;
-  color: white;
-  transition-duration: 0.8s;
-}
-
-#close:hover {
-  background-color: $white;
-  color: black;
 }
 </style>
