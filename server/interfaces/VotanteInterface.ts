@@ -10,6 +10,7 @@ export interface IVotante extends Document {
   barrio: string;
   comuna: number;
   email: string;
+  profesion: string;
   ocupacion: string;
   RS: Array<string>;
   PuestoVotacion: string;

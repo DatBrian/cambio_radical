@@ -102,6 +102,16 @@
         placeholder=""
         type="text"
         class="input"
+        v-model="votante.profesion"
+      />
+      <span>Profesión</span>
+    </label>
+    <label>
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
         v-model="votante.ocupacion"
       />
       <span>Ocupación</span>
@@ -168,6 +178,7 @@ const votante: Ref<IVotante> = ref({
   barrio: "",
   comuna: "",
   email: "",
+  profesion: "",
   ocupacion: "",
   RS: "",
   PuestoVotacion: "",

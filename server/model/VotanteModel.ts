@@ -54,6 +54,11 @@ class VotanteSchema {
         required: true,
         trim:true
       },
+      profesion: {
+        type: String,
+        required: true,
+        trim:true
+      },
       ocupacion: {
         type: String,
         required: true,

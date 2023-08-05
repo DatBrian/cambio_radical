@@ -1,9 +1,9 @@
 <template>
-    <LoginForm/>
+  <LoginForm />
 </template>
 
 <script setup lang="ts">
-import LoginForm from '../components/LoginForm.vue'
+import LoginForm from "../components/LoginForm.vue";
 </script>
 
-<style lang="scss"></style>
+<style scoped lang="scss"></style>
