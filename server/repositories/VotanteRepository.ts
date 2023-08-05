@@ -56,6 +56,17 @@ class VotanteRepository extends QueriesCommon<IVotante> {
             throw new Error("Error al eliminar el votante");
         }
     }
+
+    public async verifyDoc(doc: any): Promise<boolean>{
+        try {
+            const exist = await this.model.findOne({ doc: doc });
+            return (exist) ? true : false
+        } catch (error) {
+            console.error("Error al verificar el votante:", error);
+            throw new Error("Error al verificar el votante");
+
+        }
+    }
 }
 
 export default VotanteRepository;

@@ -74,7 +74,7 @@ const showForm = () => {
   overflow: hidden;
   transition-duration: 1.5s;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
-  background-color: $red;
+  background-color: rgb(255, 77, 77);
   color: white;
   font-weight: bold;
   font-size: em(3);

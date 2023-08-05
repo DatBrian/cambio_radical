@@ -30,6 +30,11 @@ class VotanteServices {
         const id = body.id;
         return this.repository.deleteVotante(id);
     }
+
+    public async verifyDoc(body: any): Promise<boolean>{
+        const doc = body.doc;
+        return this.repository.verifyDoc(doc);
+    }
 }
 
 export default VotanteServices;

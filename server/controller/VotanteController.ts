@@ -61,6 +61,8 @@ export class VotanteController {
             res.status(500).json({ error: 'Ocurrió un error al eliminar el votante, revise la consola para más información' });
         }
     }
+
+    // public verifyDoc = async (req:Request, res:)
 }
 export default VotanteController
 export const votanteController = new VotanteController();

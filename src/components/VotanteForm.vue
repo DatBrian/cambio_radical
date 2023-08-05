@@ -11,7 +11,7 @@
           class="input"
           v-model="votante.name"
         />
-        <span>nombre</span>
+        <span>Nombre</span>
       </label>
 
       <label>
@@ -22,7 +22,7 @@
           class="input"
           v-model="votante.lider"
         />
-        <span>lider</span>
+        <span>Lider</span>
       </label>
     </div>
 
@@ -34,7 +34,7 @@
         class="input"
         v-model="votante.doc"
       />
-      <span>documento</span>
+      <span>Documento</span>
     </label>
 
     <label>
@@ -54,7 +54,7 @@
         class="input"
         v-model="votante.telefono"
       />
-      <span>telefono</span>
+      <span>Teléfono</span>
     </label>
     <label>
       <input
@@ -64,7 +64,7 @@
         class="input"
         v-model="votante.direccion"
       />
-      <span>dirección</span>
+      <span>Dirección</span>
     </label>
     <label>
       <input
@@ -74,7 +74,7 @@
         class="input"
         v-model="votante.barrio"
       />
-      <span>barrio</span>
+      <span>Barrio</span>
     </label>
     <label>
       <input
@@ -84,7 +84,7 @@
         class="input"
         v-model="votante.comuna"
       />
-      <span>comuna</span>
+      <span>Comuna</span>
     </label>
     <label>
       <input
@@ -104,7 +104,7 @@
         class="input"
         v-model="votante.ocupacion"
       />
-      <span>ocupacion</span>
+      <span>Ocupación</span>
     </label>
     <label>
       <input
@@ -144,9 +144,12 @@
         class="input"
         v-model="votante.compromiso"
       />
-      <span>compromiso</span>
+      <span>Compromiso</span>
     </label>
     <button class="submit">Submit</button>
+    <a target="_blank" href="https://wsp.registraduria.gov.co/censo/consultar"
+      >Click aqui para obtener la información de votación
+    </a>
   </form>
 </template>
 
@@ -212,6 +215,9 @@ const saveVotante = async () => {
 <style scoped lang="scss">
 @import "~sweetalert2/dist/sweetalert2.min.css";
 
+* {
+  font-family: $font-title;
+}
 .form {
   display: flex;
   flex-direction: column;

@@ -56,7 +56,7 @@ const toggleForm = () => {
 #nav-Bar {
   width: 100%;
   height: em(15);
-  background-color: $white;
+  background-color: white;
 }
 
 #SideBar {

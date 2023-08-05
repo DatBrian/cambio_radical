@@ -69,6 +69,12 @@ const hideDetails = () => {
 </script>
 
 <style scoped lang="scss">
+* {
+  font-family: $font-title;
+  font-size: em(2);
+  font-weight: 600;
+}
+
 #modal-container {
   position: fixed;
   top: 0;
@@ -115,7 +121,7 @@ table {
   border-collapse: collapse;
   margin-top: 20px;
   thead th {
-    background-color: rgb(255, 77, 77);
+    background-color: rgb(73, 73, 255);
     border: 1px solid #ddd;
     padding: 10px;
   }
@@ -126,7 +132,7 @@ table {
   }
   tbody tr {
     border: 1px solid black;
-    background-color: #f9f9f9;
+    background-color: $white;
   }
 }
 
@@ -135,6 +141,6 @@ table tbody tr {
 }
 
 table tbody tr:hover {
-  background-color: $gray;
+  background-color: rgb(255, 77, 77);
 }
 </style>

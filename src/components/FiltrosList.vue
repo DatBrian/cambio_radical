@@ -58,6 +58,11 @@ input {
   transition: 300ms ease-in-out;
 }
 
+input:focus {
+  background-color: $__red;
+  transform: scale(1.05);
+}
+
 .total {
   margin-top: em(2);
 }
