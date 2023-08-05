@@ -89,6 +89,11 @@ class VotanteSchema {
         type: String,
         required: true,
         trim:true
+      },
+      fidelidad: {
+        type: String,
+        required: true,
+        trim:true
       }
     }, {
       timestamps: true,

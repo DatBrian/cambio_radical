@@ -166,6 +166,14 @@
       />
       <span>Compromiso</span>
     </label>
+    <label>
+      <select name="fidelidad" class="input" v-model="votante.fidelidad">
+        <option value="fidelizado">Fidelizado</option>
+        <option value="sin fidelizar">Sin Fidelizar</option>
+        <option value="en espera">En Espera</option>
+      </select>
+      <span>Fidelidad</span>
+    </label>
     <button class="submit">Submit</button>
     <a target="_blank" href="https://wsp.registraduria.gov.co/censo/consultar"
       >Click aqui para obtener la información de votación
@@ -195,6 +203,7 @@ const votante: Ref<IVotante> = ref({
   PuestoVotacion: "",
   MesaVotacion: "",
   compromiso: "",
+  fidelidad: "",
 });
 
 const saveVotante = async () => {
@@ -363,6 +372,8 @@ const saveVotante = async () => {
   background-color: $blue;
   color: black;
 }
+
+//* Animaciones
 
 @keyframes pulse {
   from {
