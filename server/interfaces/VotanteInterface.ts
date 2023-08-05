@@ -5,6 +5,7 @@ export interface IVotante extends Document {
   lider: string;
   doc: number;
   nacimiento: Date;
+  celular: number;
   telefono: number;
   direccion: string;
   barrio: string;

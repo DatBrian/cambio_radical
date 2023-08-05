@@ -50,7 +50,17 @@
       <input
         required
         placeholder=""
-        type="phone"
+        type="number"
+        class="input"
+        v-model="votante.celular"
+      />
+      <span>Celular</span>
+    </label>
+    <label>
+      <input
+        required
+        placeholder=""
+        type="number"
         class="input"
         v-model="votante.telefono"
       />
@@ -173,6 +183,7 @@ const votante: Ref<IVotante> = ref({
   lider: "",
   doc: "",
   nacimiento: "",
+  calular: "",
   telefono: "",
   direccion: "",
   barrio: "",

@@ -23,6 +23,11 @@ class VotanteSchema {
         unique:true,
         trim: true,
       },
+      celular: {
+        type: Number,
+        required: true, 
+        trim:true
+      },
       nacimiento: {
         type: Date,
         required: true,
