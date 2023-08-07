@@ -260,7 +260,16 @@ const saveVotante = async () => {
     });
   }
 };
-const verifyDoc = async (doc: any) => {
+
+//*Functions
+
+// const getComunas = async () => {
+//   try {
+//     const response = await fetch("http://localhost:5000/api/v1/comunas/all");
+//   } catch (error) {}
+// };
+
+const verifyDoc = async (doc: object) => {
   try {
     const response = await fetch(
       "http://localhost:5000/api/v1/votante/verifyDoc",
