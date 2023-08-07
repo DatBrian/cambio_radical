@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from "express";
-import { RoleModel } from "../model/RoleModel";
-import { UsuarioModel } from "../model/UsuarioModel";
+// import { RoleModel } from "../model/RoleModel";
+// import { UsuarioModel } from "../model/UsuarioModel";
 
 class RolesMiddleware {
     // protected isAdmin = async (req:Request, res:Response, next:NextFunction) => {
         
     // }
 
-    protected isUser = async (req: Request, res: Response, next: NextFunction) => {
+    protected isUser = async (req: Request, res: Response, _next: NextFunction) => {
         if (req.isAuthenticated()) {
             const user = req.user;
             if (user) {

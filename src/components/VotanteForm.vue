@@ -134,7 +134,7 @@
         class="input"
         v-model="votante.RS"
       />
-      <span>Redes sociales</span>
+      <span>Redes Sociales</span>
     </label>
     <label>
       <input
@@ -182,9 +182,11 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref } from "vue";
+import { Ref, ref, onMounted } from "vue";
 import { IVotante } from "server/interfaces/VotanteInterface";
 import Swal from "sweetalert2";
+
+// onMounted(async () => {});
 
 const votante: Ref<IVotante> = ref({
   name: "",
@@ -206,39 +208,73 @@ const votante: Ref<IVotante> = ref({
   fidelidad: "",
 });
 
+const comuna = ref([]);
+const barriosComuna = ref([]);
+
 const saveVotante = async () => {
   try {
-    const response = await fetch(
-      `http://localhost:5000/api/v1/votante/create`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(votante.value),
-      }
-    );
+    const doc = {
+      doc: votante.value.doc,
+    };
+    const verifydoc = await verifyDoc(doc);
+    const isVotanteExisting = await verifydoc.json(); // Procesar la respuesta JSON
 
-    if (response.ok) {
-      Swal.fire({
-        icon: "success",
-        title: "Votante guardado exitosamente!",
-      });
-    } else {
+    if (isVotanteExisting) {
       Swal.fire({
         icon: "error",
-        title: "Error al guardar el votante.",
+        title: `El votante con documento ${votante.value.doc} ya existe.`,
       });
+    } else {
+      const response = await fetch(
+        `http://localhost:5000/api/v1/votante/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(votante.value),
+        }
+      );
+
+      if (response.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Votante guardado exitosamente!",
+        });
+
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error al guardar el votante.",
+        });
+      }
     }
-    setTimeout(() => {
-      location.reload();
-    }, 2000);
   } catch (error: any) {
     Swal.fire({
       icon: "error",
       title: "Error al enviar la petición.",
       text: error.message,
     });
+  }
+};
+const verifyDoc = async (doc: any) => {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/v1/votante/verifyDoc",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(doc),
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("Error al verificar el documento");
   }
 };
 </script>

@@ -25,7 +25,7 @@ class VotanteSchema {
       },
       celular: {
         type: Number,
-        required: true, 
+        required: true,
         trim:true
       },
       nacimiento: {
