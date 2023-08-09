@@ -121,9 +121,10 @@ table {
   border-collapse: collapse;
   margin-top: 20px;
   thead th {
-    background-color: rgb(73, 73, 255);
+    background-color: $red;
     border: 1px solid #ddd;
     padding: 10px;
+    color: white;
   }
   tbody td {
     border: 1px solid black;

@@ -41,6 +41,9 @@ const toggleForm = () => {
 #votantes {
   display: flex;
   margin-inline-start: 25%;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: scroll;
 }
 
 #form {
@@ -120,4 +123,5 @@ const toggleForm = () => {
 
 .aparecer-leave-active {
   animation: aparecer 0s;
-}</style>
+}
+</style>
