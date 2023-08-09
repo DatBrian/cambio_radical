@@ -1,9 +1,10 @@
-import { Document } from 'mongoose';
+import { Document } from "mongoose";
 
 export interface IVotante extends Document {
   name: string;
   lider: string;
   doc: number;
+  genero: string;
   nacimiento: Date;
   celular: number;
   telefono: number;

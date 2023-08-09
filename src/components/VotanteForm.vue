@@ -4,38 +4,93 @@
     <p class="message">Ingresa los datos del nuevo votante</p>
     <div class="flex">
       <label>
-        <input required placeholder="" type="text" class="input" v-model="votante.name" />
+        <input
+          required
+          placeholder=""
+          type="text"
+          class="input"
+          v-model="votante.name"
+        />
         <span>Nombre</span>
       </label>
 
       <label>
-        <input required placeholder="" type="text" class="input" v-model="votante.lider" />
+        <input
+          required
+          placeholder=""
+          type="text"
+          class="input"
+          v-model="votante.lider"
+        />
         <span>Lider</span>
       </label>
     </div>
 
     <label>
-      <input required placeholder="" type="number" class="input" v-model="votante.doc" />
+      <input
+        required
+        placeholder=""
+        type="number"
+        class="input"
+        v-model="votante.doc"
+      />
       <span>Documento</span>
     </label>
 
     <label>
-      <input required placeholder="nacimiento" type="date" class="input" v-model="votante.nacimiento" />
+      <select required class="input" v-model="votante.genero">
+        <option value="">Selecciona un género</option>
+        <option value="1">Masculino</option>
+        <option value="2">Femenino</option>
+      </select>
+    </label>
+
+    <label>
+      <input
+        required
+        placeholder="nacimiento"
+        type="date"
+        class="input"
+        v-model="votante.nacimiento"
+      />
     </label>
     <label>
-      <input required placeholder="" type="number" class="input" v-model="votante.celular" />
+      <input
+        required
+        placeholder=""
+        type="number"
+        class="input"
+        v-model="votante.celular"
+      />
       <span>Celular</span>
     </label>
     <label>
-      <input required placeholder="" type="number" class="input" v-model="votante.telefono" />
+      <input
+        required
+        placeholder=""
+        type="number"
+        class="input"
+        v-model="votante.telefono"
+      />
       <span>Teléfono</span>
     </label>
     <label>
-      <input required placeholder="" type="text" class="input" v-model="votante.direccion" />
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.direccion"
+      />
       <span>Dirección</span>
     </label>
     <label>
-      <select required class="input" v-model="votante.comuna" @change="handleComunaChange">
+      <select
+        required
+        class="input"
+        v-model="votante.comuna"
+        @change="handleComunaChange"
+      >
         <option disabled value="">Selecciona una comuna</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -45,31 +100,81 @@
         <option value="6">6</option>
         <option value="7">7</option>
       </select>
-      <label>
-        <select required class="input" v-model="votante.barrio">
-          <option disabled value="">Selecciona un barrio</option>
-          <option v-for="barrio in barriosComuna" :key="barrio">
-            {{ barrio.name }}
-          </option>
-        </select>
-      </label>
     </label>
     <label>
-      <input required placeholder="" type="email" class="input" v-model="votante.email" />
+      <select required class="input" v-model="votante.barrio">
+        <option disabled value="">Selecciona un barrio</option>
+        <option v-for="barrio in barriosComuna" :key="barrio">
+          {{ barrio.name }}
+        </option>
+      </select>
+    </label>
+    <label>
+      <input
+        required
+        placeholder=""
+        type="email"
+        class="input"
+        v-model="votante.email"
+      />
       <span>Email</span>
     </label>
     <label>
-      <input required placeholder="" type="text" class="input" v-model="votante.profesion" />
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.profesion"
+      />
       <span>Profesión</span>
     </label>
     <label>
-      <input required placeholder="" type="text" class="input" v-model="votante.ocupacion" />
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.ocupacion"
+      />
       <span>Ocupación</span>
     </label>
-    <label>
-      <input required placeholder="" type="text" class="input" v-model="votante.RS" />
-      <span>Redes Sociales</span>
-    </label>
+    <fieldset class="redes-container">
+      <legend>Redes Sociales</legend>
+      <button
+        @click="addRedSocial"
+        class="add-button"
+        style="margin-bottom: 1em"
+      >
+        <span class="button-text">Agregar Red Social</span>
+        <i class="fas fa-plus-circle"></i>
+      </button>
+      <label v-for="(red, index) in redesSociales" :key="index">
+        <input
+          required
+          placeholder="Red Social"
+          type="text"
+          class="input rs"
+          v-model="red.red"
+        />
+        <input
+          required
+          placeholder="Username"
+          type="text"
+          class="input rs"
+          v-model="red.usuario"
+        />
+        <button
+          v-if="index > 0"
+          @click="removeRedSocial(index)"
+          class="remove-button"
+        >
+          <span class="button-text">Eliminar</span>
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </label>
+    </fieldset>
+
     <label>
       <select required class="input" v-model="votante.PuestoVotacion">
         <option disabled value="">Selecciona un puesto de votación</option>
@@ -79,11 +184,23 @@
       </select>
     </label>
     <label>
-      <input required placeholder="" type="number" class="input" v-model="votante.MesaVotacion" />
+      <input
+        required
+        placeholder=""
+        type="number"
+        class="input"
+        v-model="votante.MesaVotacion"
+      />
       <span>Mesa de votación</span>
     </label>
     <label>
-      <input required placeholder="" type="text" class="input" v-model="votante.compromiso" />
+      <input
+        required
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.compromiso"
+      />
       <span>Compromiso</span>
     </label>
     <label>
@@ -95,8 +212,8 @@
       <span>Fidelidad</span>
     </label>
     <button class="submit">Submit</button>
-    <a target="_blank" href="https://wsp.registraduria.gov.co/censo/consultar">Click aqui para obtener la información de
-      votación
+    <a target="_blank" href="https://wsp.registraduria.gov.co/censo/consultar"
+      >Click aqui para obtener la información de votación
     </a>
   </form>
 </template>
@@ -106,15 +223,18 @@ import { Ref, onMounted, ref } from "vue";
 import { IVotante } from "server/interfaces/VotanteInterface";
 import Swal from "sweetalert2";
 
+onMounted(async () => {
+  puestoVotacion.value = await getPuestos();
+});
+
 const puestoVotacion = ref([]);
-// onMounted(async () => {
-//   puestoVotacion.value = await getPuestos();
-// });
+const redesSociales = ref([{ red: "", usuario: "" }]);
 
 const votante: Ref<IVotante> = ref({
   name: "",
   lider: "",
   doc: "",
+  genero: "",
   nacimiento: "",
   calular: "",
   telefono: "",
@@ -124,7 +244,7 @@ const votante: Ref<IVotante> = ref({
   email: "",
   profesion: "",
   ocupacion: "",
-  RS: "",
+  RS: redesSociales.value,
   PuestoVotacion: "",
   MesaVotacion: "",
   compromiso: "",
@@ -132,6 +252,8 @@ const votante: Ref<IVotante> = ref({
 });
 
 const barriosComuna = ref([]);
+
+//*Functions
 
 const saveVotante = async () => {
   try {
@@ -183,7 +305,13 @@ const saveVotante = async () => {
   }
 };
 
-//*Functions
+const addRedSocial = () => {
+  redesSociales.value.push({ red: "", usuario: "" });
+};
+
+const removeRedSocial = (index) => {
+  redesSociales.value.splice(index, 1);
+};
 
 const handleComunaChange = async () => {
   const barrios = await getBarrios();
@@ -195,16 +323,14 @@ const handleComunaChange = async () => {
 
 const getPuestos = async () => {
   try {
-    const response = await fetch("http://localhost:5000/api/v1/puesto/all",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-    console.log(await response.json());
+    const response = await fetch("http://localhost:5000/api/v1/puesto/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    return await response.json()
+    return await response.json();
   } catch (error) {
     console.log("Error al obtener los puestos de votación");
   }
@@ -332,7 +458,7 @@ const verifyDoc = async (doc: object) => {
   border-radius: 10px;
 }
 
-.form label .input+span {
+.form label .input + span {
   position: absolute;
   left: 10px;
   top: 15px;
@@ -342,19 +468,19 @@ const verifyDoc = async (doc: object) => {
   transition: 0.3s ease;
 }
 
-.form label .input:placeholder-shown+span {
+.form label .input:placeholder-shown + span {
   top: 15px;
   font-size: 0.9em;
 }
 
-.form label .input:focus+span,
-.form label .input:valid+span {
+.form label .input:focus + span,
+.form label .input:valid + span {
   top: 30px;
   font-size: 0.7em;
   font-weight: 600;
 }
 
-.form label .input:valid+span {
+.form label .input:valid + span {
   color: $green;
 }
 
@@ -375,6 +501,77 @@ const verifyDoc = async (doc: object) => {
 }
 
 select {
+  margin-bottom: em(1);
+}
+
+.redes-container {
+  margin-top: 0px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.red-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.red-input-group {
+  display: flex;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.remove-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background-color: $red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.add-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background-color: $blue;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+  background-color: $__red;
+}
+.add-button:hover {
+  background-color: #2980b9;
+}
+
+.button-text {
+  font-size: 14px;
+}
+
+.fa-trash-alt,
+.fa-plus-circle {
+  font-size: 18px;
+}
+
+.rs {
   margin-bottom: em(1);
 }
 
