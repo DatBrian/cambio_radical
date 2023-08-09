@@ -77,24 +77,29 @@
       <span>Dirección</span>
     </label>
     <label>
-      <input
+      <select
         required
-        placeholder=""
-        type="text"
-        class="input"
-        v-model="votante.barrio"
-      />
-      <span>Barrio</span>
-    </label>
-    <label>
-      <input
-        required
-        placeholder=""
-        type="number"
         class="input"
         v-model="votante.comuna"
-      />
-      <span>Comuna</span>
+        @change="handleComunaChange"
+      >
+        <option disabled value="">Selecciona una comuna</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+      </select>
+      <label>
+        <select required class="input" v-model="votante.barrio">
+          <option disabled value="">Selecciona un barrio</option>
+          <option v-for="barrio in barriosComuna" :key="barrio">
+            {{ barrio.name }}
+          </option>
+        </select>
+      </label>
     </label>
     <label>
       <input
@@ -186,7 +191,9 @@ import { Ref, ref, onMounted } from "vue";
 import { IVotante } from "server/interfaces/VotanteInterface";
 import Swal from "sweetalert2";
 
-// onMounted(async () => {});
+// onMounted(async () => {
+//   const barrios = await getBarrios();
+// });
 
 const votante: Ref<IVotante> = ref({
   name: "",
@@ -208,8 +215,8 @@ const votante: Ref<IVotante> = ref({
   fidelidad: "",
 });
 
-const comuna = ref([]);
 const barriosComuna = ref([]);
+const puestoVotacion = ref([]);
 
 const saveVotante = async () => {
   try {
@@ -263,11 +270,35 @@ const saveVotante = async () => {
 
 //*Functions
 
-// const getComunas = async () => {
+const handleComunaChange = async () => {
+  const barrios = await getBarrios();
+  const comuna = votante.value.comuna;
+  barriosComuna.value = await barrios.filter(
+    (barrio) => barrio.comuna == comuna
+  );
+};
+
+// const getPuestos = async () => {
 //   try {
-//     const response = await fetch("http://localhost:5000/api/v1/comunas/all");
-//   } catch (error) {}
+//     const response = await fetch("http://localhost:5000/api/v1")
+//   } catch (error) {
+//     console.log("Error al obtener los puestos de votación");
+//   }
 // };
+
+const getBarrios = async () => {
+  try {
+    const response = await fetch("http://localhost:5000/api/v1/barrio/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+    });
+    return response.json();
+  } catch (error) {
+    console.error("Error al obtener los barrios");
+  }
+};
 
 const verifyDoc = async (doc: object) => {
   try {
@@ -416,6 +447,10 @@ const verifyDoc = async (doc: object) => {
 .submit:hover {
   background-color: $blue;
   color: black;
+}
+
+select {
+  margin-bottom: em(1);
 }
 
 //* Animaciones
