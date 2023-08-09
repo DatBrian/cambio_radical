@@ -1,26 +1,26 @@
   //* Properties
-$opacity: .8;
-$_opacity: .6;
+  $opacity: .8;
+  $_opacity: .6;
 
-//* Colors
-$blue: #7C6EEB;
-$_blue: rgba($blue, $opacity);
-$red: rgb(255, 77, 77);
-$__red: rgba($red, $_opacity);
-$white: #ffece1;
-$green: rgb(0, 255, 94);
-$gray: rgb(207, 207, 207);
+  //* Colors
+  $blue: #3733ff;
+  $_blue: rgba($blue, $opacity);
+  $red: rgb(255, 77, 77);
+  $__red: rgba($red, $_opacity);
+  $white: #ffece1;
+  $green: rgb(0, 255, 94);
+  $gray: rgb(207, 207, 207);
 
-//* Fonts
-$font-title: 'Arial', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  //* Fonts
+  $font-title: 'Arial', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
-//* Custom
-$base-size: 10px;
+  //* Custom
+  $base-size: 10px;
 
-//* Animations
-$fadeIn-duration: 2.5s;
+  //* Animations
+  $fadeIn-duration: 2.5s;
 
-//*Functions
-@function em($value){
+  //*Functions
+  @function em($value) {
     @return $value * $base-size
-}
+  }

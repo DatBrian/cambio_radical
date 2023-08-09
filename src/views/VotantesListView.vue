@@ -25,7 +25,6 @@ import VotantesAll from "../components/VotantesAll.vue";
 import { ref } from "vue";
 
 const showForm = ref(false);
-const showMenuBtn = ref(true);
 
 const toggleForm = () => {
   showForm.value = !showForm.value;
@@ -73,6 +72,7 @@ const toggleForm = () => {
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -90,6 +90,7 @@ const toggleForm = () => {
   from {
     transform: translateY(-100%);
   }
+
   to {
     transform: translateY(0);
   }
@@ -98,6 +99,7 @@ const toggleForm = () => {
 .slide-in-enter-active {
   animation: slideIn 0.8s;
 }
+
 .slide-in-leave-active {
   animation: slideIn 0.5s reverse;
 }
@@ -106,6 +108,7 @@ const toggleForm = () => {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -117,5 +120,4 @@ const toggleForm = () => {
 
 .aparecer-leave-active {
   animation: aparecer 0s;
-}
-</style>
+}</style>

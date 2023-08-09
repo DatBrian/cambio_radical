@@ -21,4 +21,4 @@ class ConnectionDB {
     }
 }
 
-export {ConnectionDB};
+export { ConnectionDB };
