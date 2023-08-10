@@ -20,8 +20,9 @@ class UsuarioSchema {
           trim: true,
         },
         role: {
-          ref: "Role",
-          type: Schema.Types.ObjectId,
+          type: String,
+          required: true,
+          trim: true,
         },
       },
       {

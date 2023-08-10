@@ -1,3 +1,4 @@
+import { generateToken } from "../common/FunctionsCommon";
 import { UsuarioModel } from "../model/UsuarioModel";
 import AuthRepository, { authRepository } from "../repositories/AuthRepository";
 
@@ -26,9 +27,33 @@ class AuthServices {
     } else {
       const encryptedPassword =
         await UsuarioModel.schema.methods.encryptPassword(password);
-      body.password = encryptedPassword;
+      body.password = await encryptedPassword;
       const newUser = await this.repository.signUp(body);
       return newUser;
+    }
+  }
+
+  public async signIn(body: any) {
+    const errors = [];
+    const user: any = await this.repository.signIn(body);
+    const matchPassword = await UsuarioModel.schema.methods.matchPassword(
+      body.password,
+      user.password
+    );
+
+    if (!user) {
+      errors.push({ text: "Usuario no encontrado :(" });
+    }
+    if (!matchPassword) {
+      errors.push({ text: "Contraseña incorrecta :(" });
+    }
+
+    if (errors.length > 0) {
+      return errors;
+    } else {
+      const token = generateToken({ id: user._id });
+
+      return token;
     }
   }
 }

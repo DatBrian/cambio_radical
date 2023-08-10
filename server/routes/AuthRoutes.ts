@@ -15,7 +15,7 @@ class AuthRoutes {
 
   private initRoutes() {
     this.router.post(`${this.path}/signup`, authController.signUp);
-    this.router.post(`${this.path}/signup`, authController.signUp);
+    this.router.post(`${this.path}/signin`, authController.signIn);
   }
 }
 

@@ -2,7 +2,6 @@
 import AuthServices, { authServices } from "../services/AuthServices";
 import { Request, Response } from "express";
 // import passport from "passport";
-import { generateToken } from "../common/FunctionsCommon";
 
 export class AuthController {
   private readonly service: AuthServices;
@@ -11,25 +10,26 @@ export class AuthController {
   }
 
   public signUp = async (req: Request, res: Response) => {
-    const { username, password, roles } = req.body;
+    const { username, password, role } = req.body;
 
-    const newUser: any = await this.service.signUp({
+    const response: any = await this.service.signUp({
       username,
       password,
-      roles,
+      role,
     });
 
-    const data = { id: newUser._id };
-
-    const token = await generateToken(data);
-
-    res.json(token);
+    res.json(response);
   };
 
-  //   public signIn = passport.authenticate("local", {
-  //     failureRedirect: "/auth/login",
-  //     successRedirect: "/",
-  //   });
+  public signIn = async (req: Request, res: Response) => {
+    const { username, password } = req.body;
+    const token = await this.service.signIn({ username, password });
+    const response = {
+      status: "Usuario encontrado :D",
+      token: token,
+    };
+    res.json(response);
+  };
 }
 export default AuthController;
 export const authController = new AuthController();
