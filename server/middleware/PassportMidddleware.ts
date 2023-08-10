@@ -20,7 +20,6 @@ passport.use(
         const body = req.body;
         newUser.username = username;
         newUser.password = newUser.schema.methods.encryptPassword(password);
-        newUser.email = body.email;
         newUser.role = body.role;
         await newUser.save();
         done(null, newUser);
