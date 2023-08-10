@@ -1,60 +1,60 @@
-import { Schema, model } from 'mongoose';
-import { IUsuario } from '../interfaces/UsuarioInterface';
-import bcrypt from 'bcryptjs'
+import { Schema, model } from "mongoose";
+import { IUsuario } from "../interfaces/UsuarioInterface";
+import bcrypt from "bcryptjs";
 
 class UsuarioSchema {
-  private schema: Schema;
+  protected schema: Schema;
 
   constructor() {
-    this.schema = new Schema({
-      username: {
-        type: String,
-        required: true,
-        unique:true,
-        trim: true
-      },
-      email: {
-        type: Date,
-        required: true,
-        unique:true,
-        trim: true
-      },
-      password: {
-        type: String,
-        required: true,
-        unique:true,
-        trim: true
-      },
-      role: {
+    this.schema = new Schema(
+      {
+        username: {
+          type: String,
+          required: true,
+          unique: true,
+          trim: true,
+        },
+        password: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        role: {
           ref: "Role",
-          type: Schema.Types.ObjectId
+          type: Schema.Types.ObjectId,
+        },
+      },
+      {
+        timestamps: true,
+        versionKey: false,
       }
-    }, {
-      timestamps: true,
-      versionKey: false
-    });
+    );
 
-    this.schema.set('toJSON', {
+    this.schema.set("toJSON", {
       transform: (_document, returnedObject) => {
-        returnedObject.id = returnedObject._id
-        delete returnedObject._id
-      }
+        returnedObject.id = returnedObject._id;
+        delete returnedObject._id;
+      },
     });
 
-    this.schema.methods.encryptPassword = async (password:string): Promise<string> => {
+    this.schema.methods.encryptPassword = async (
+      password: string
+    ): Promise<string> => {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(password, salt);
       return hash;
-    }
+    };
 
-    this.schema.methods.matchPassword = async (password:string, receivedPassword:string):Promise<boolean | null> => {
-      return await bcrypt.compare(password, receivedPassword)
-    }
-
+    this.schema.methods.matchPassword = async function (
+      password: string,
+      recPassword: string
+    ): Promise<boolean> {
+      return await bcrypt.compare(password, recPassword);
+    };
   }
 
   public getModel() {
-    const Usuario = model<IUsuario>('Usuario', this.schema);
+    const Usuario = model<IUsuario>("Usuario", this.schema);
     return Usuario;
   }
 }

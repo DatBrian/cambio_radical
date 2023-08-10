@@ -18,6 +18,7 @@ class VotanteRoutes extends RouterCommon<VotanteController> {
   }
 
   private initRoutes() {
+
     this.router.get(`${this.path}/all`, this.controller.getAllVotante);
     this.router.get(`${this.path}/id`, (req, res) => {
       this.controller.getVotanteById(req, res);

@@ -7,9 +7,10 @@ import session from "express-session";
 import morgan from "morgan";
 import cors from "cors";
 // import { authJWTMiddleware } from "./middleware/AuthMiddleware";
-import { authRoutes } from "./routes/AuthRoutes";
+// import { authRoutes } from "./routes/AuthRoutes";
 import { ConnectionDB } from "./db/ConnectionDB";
 import passport from "passport";
+import { authRoutes } from "./routes/AuthRoutes";
 
 class App extends ConnectionDB {
   public app: Application;
