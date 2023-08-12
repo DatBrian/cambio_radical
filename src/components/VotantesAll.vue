@@ -1,5 +1,5 @@
 <template>
-  <div id="container">
+  <div id="container" v-if="votantes.length > 0">
     <table>
       <thead>
         <tr>
@@ -40,22 +40,19 @@
 
 <script setup lang="ts">
 import VotanteDetails from "./VotanteDetails.vue";
-import { Ref, ref, onMounted } from "vue";
+import { Ref, onMounted, ref } from "vue";
 import { IVotante } from "server/interfaces/VotanteInterface";
+import useAuth from "@/store/Auth";
 
+const store = useAuth();
 const votantes: Ref<IVotante[]> = ref([]);
 const selectedVotante: Ref<IVotante | null> = ref(null);
 const showDetailsFlag: Ref<boolean> = ref(false);
 
-onMounted(async () => {
-  const response = await fetch(`http://localhost:5000/api/v1/votante/all`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  votantes.value = await response.json();
-});
+  onMounted(async () =>{
+    const votantesList = await store.getVotantes()
+    votantes.value = votantesList;
+})
 
 const showDetails = (votante: IVotante) => {
   selectedVotante.value = votante;

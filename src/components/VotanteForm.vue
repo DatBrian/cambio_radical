@@ -222,12 +222,15 @@
 import { Ref, onMounted, ref } from "vue";
 import { IVotante } from "server/interfaces/VotanteInterface";
 import Swal from "sweetalert2";
+import useAuth from "@/store/Auth";
+
+const store = useAuth();
+const puestoVotacion = ref([]);
 
 onMounted(async () => {
-  puestoVotacion.value = await getPuestos();
+  puestoVotacion.value = await store.getPuestos();
 });
 
-const puestoVotacion = ref([]);
 const redesSociales = ref([{ red: "", usuario: "" }]);
 
 const votante: Ref<IVotante> = ref({
@@ -260,8 +263,7 @@ const saveVotante = async () => {
     const doc = {
       doc: votante.value.doc,
     };
-    const verifydoc = await verifyDoc(doc);
-    const isVotanteExisting = await verifydoc.json();
+    const isVotanteExisting = await store.verifyDoc(doc);
 
     if (isVotanteExisting) {
       Swal.fire({
@@ -269,32 +271,75 @@ const saveVotante = async () => {
         title: `El votante con documento ${votante.value.doc} ya existe.`,
       });
     } else {
-      const response = await fetch(
-        `http://localhost:5000/api/v1/votante/create`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(votante.value),
-        }
-      );
+      const confirmationResult = await Swal.fire({
+        icon: "info",
+        title: "Confirmar Datos",
+        html: `
+          <p><strong>Nombre:</strong> ${votante.value.name}</p>
+          <p><strong>Lider:</strong> ${votante.value.lider}</p>
+          <p><strong>Documento:</strong> ${votante.value.doc}</p>
+          <p><strong>Género:</strong> ${votante.value.genero}</p>
+          <p><strong>Fecha de nacimiento:</strong> ${votante.value.nacimiento}</p>
+          <p><strong>Celular:</strong> ${votante.value.celular}</p>
+          <p><strong>Teléfono:</strong> ${votante.value.telefono}</p>
+          <p><strong>Dirección:</strong> ${votante.value.direccion}</p>
+          <p><strong>Comuna:</strong> ${votante.value.comuna}</p>
+          <p><strong>Barrio:</strong> ${votante.value.barrio}</p>
+          <p><strong>Email:</strong> ${votante.value.email}</p>
+          <p><strong>Profesión:</strong> ${votante.value.profesion}</p>
+          <p><strong>Ocupación:</strong> ${votante.value.ocupacion}</p>
+          <p><strong>Redes Sociales:</strong> ${JSON.stringify(votante.value.RS)}</p>
+          <p><strong>Puesto de votación:</strong> ${votante.value.PuestoVotacion}</p>
+          <p><strong>Mesa de votación:</strong> ${votante.value.MesaVotacion}</p>
+          <p><strong>Compromiso:</strong> ${votante.value.compromiso}</p>
+          <p><strong>Fidelidad:</strong> ${votante.value.fidelidad}</p>
 
-      if (response.ok) {
-        Swal.fire({
-          icon: "success",
-          title: "Votante guardado exitosamente!",
-        });
+          <!-- Agrega los demás campos aquí -->
+        `,
+        showCancelButton: true,
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar",
+      });
 
-        setTimeout(() => {
-          location.reload();
-        }, 2000);
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error al guardar el votante.",
-        });
-      }
+      if (confirmationResult.isConfirmed) {
+  const response = await store.saveVotante(votante.value);
+      
+  if (response.ok) {
+    Swal.fire({
+      icon: "success",
+      title: "Votante guardado exitosamente!",
+    });
+
+    // Restablecer los valores del formulario
+    votante.value = {
+      name: "",
+      lider: "",
+      doc: "",
+      genero: "",
+      nacimiento: "",
+      celular: "",
+      telefono: "",
+      direccion: "",
+      barrio: "",
+      comuna: "",
+      email: "",
+      profesion: "",
+      ocupacion: "",
+      RS: [{ red: "", usuario: "" }],
+      PuestoVotacion: "",
+      MesaVotacion: "",
+      compromiso: "",
+      fidelidad: "",
+    };
+    redesSociales.value = [{ red: "", usuario: "" }];
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Error al guardar el votante.",
+    });
+  }
+}
+
     }
   } catch (error: any) {
     Swal.fire({
@@ -305,6 +350,43 @@ const saveVotante = async () => {
   }
 };
 
+
+// const saveVotante = async () => {
+//   try {
+//     const doc = {
+//       doc: votante.value.doc,
+//     };
+//     const isVotanteExisting = await store.verifyDoc(doc);
+
+//     if (isVotanteExisting) {
+//       Swal.fire({
+//         icon: "error",
+//         title: `El votante con documento ${votante.value.doc} ya existe.`,
+//       });
+//     } else {
+//       const response = await store.saveVotante(votante.value);
+      
+//       if (response.ok) {
+//         Swal.fire({
+//           icon: "success",
+//           title: "Votante guardado exitosamente!",
+//         });
+//       } else {
+//         Swal.fire({
+//           icon: "error",
+//           title: "Error al guardar el votante.",
+//         });
+//       }
+//     }
+//   } catch (error: any) {
+//     Swal.fire({
+//       icon: "error",
+//       title: "Error al enviar la petición.",
+//       text: error.message,
+//     });
+//   }
+// };
+
 const addRedSocial = () => {
   redesSociales.value.push({ red: "", usuario: "" });
 };
@@ -314,60 +396,13 @@ const removeRedSocial = (index) => {
 };
 
 const handleComunaChange = async () => {
-  const barrios = await getBarrios();
+  const barrios = await store.getBarrios();
   const comuna = votante.value.comuna;
-  console.log(barrios);
   barriosComuna.value = await barrios.filter(
     (barrio) => barrio.comuna == comuna
   );
 };
 
-const getPuestos = async () => {
-  try {
-    const response = await fetch("http://localhost:5000/api/v1/puesto/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    return await response.json();
-  } catch (error) {
-    console.log("Error al obtener los puestos de votación");
-  }
-};
-
-const getBarrios = async () => {
-  try {
-    const response = await fetch("http://localhost:5000/api/v1/barrio/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "Application/json",
-      },
-    });
-    return response.json();
-  } catch (error) {
-    console.error("Error al obtener los barrios");
-  }
-};
-
-const verifyDoc = async (doc: object) => {
-  try {
-    const response = await fetch(
-      "http://localhost:5000/api/v1/votante/verifyDoc",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(doc),
-      }
-    );
-    return response;
-  } catch (error) {
-    console.error("Error al verificar el documento");
-  }
-};
 </script>
 
 <style scoped lang="scss">

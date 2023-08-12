@@ -29,7 +29,7 @@ class VotanteRoutes extends RouterCommon<VotanteController> {
     });
     this.router.post(
       `${this.path}/create`,
-      rolesMiddleware.isAdmin,
+      rolesMiddleware.isUser,
       (req, res) => {
         this.controller.insertVotante(req, res);
       }

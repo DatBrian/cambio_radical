@@ -5,7 +5,7 @@ const useAuth  = defineStore('auth',{
         return{
             token: null,
             role: null,
-            baseURL: 'http://localhost:5000/api/v1'
+            baseURL: 'https://cambioradicalserver.up.railway.app/api/v1'
         }
     },
     actions: {
@@ -52,10 +52,83 @@ const useAuth  = defineStore('auth',{
                 this.token = null;
                 return false
             }else{
+                
                 this.token = response.token
                 this.role = response.role
                 return true
             }
+        },
+        async getVotantes(){
+
+            const uri = `${this.baseURL}/votante/all`
+            const res = await fetch(uri,{
+                method: 'GET',
+                headers:{
+                    'Content-Type' : 'Application/json',
+                    'Accept': 'Application/json',
+                    'Authorization': `${this.token}`
+                }
+            });
+            const response = await res.json();
+
+            return response
+        },
+        async getPuestos(){
+            const uri = `${this.baseURL}/puesto/all`
+            const res = await fetch(uri,{
+                method: 'GET',
+                headers:{
+                    'Content-Type' : 'Application/json',
+                    'Accept' : 'Application/json',
+                    'Authorization' : `${this.token}`
+                }
+            });
+            const response = await res.json();
+
+            return response
+        },
+        async getBarrios(){
+            const uri =`${this.baseURL}/barrio/all`
+            const res = await fetch(uri,{
+                method: 'GET',
+                headers:{
+                    'Content-Type' : 'Application/json',
+                    'Accept' : 'Application/json',
+                    'Authorization' : `${this.token}`
+                }
+            });
+            const response = await res.json();
+
+            return response
+        },
+        async saveVotante(body:any){
+            const uri = `${this.baseURL}/votante/create`
+            const response = await fetch(uri,{
+                method: 'POST',
+                headers:{
+                    'Content-Type' : 'Application/json',
+                    'Accept' : 'Application/json',
+                    'Authorization' : `${this.token}`
+                },
+                body: JSON.stringify(body)
+            });
+
+            return response
+        },
+        async verifyDoc(doc:object){
+            const uri = ` ${this.baseURL}/votante/verifyDoc`
+            const res = await fetch(uri,{
+                method: 'POST',
+                headers:{
+                    'Content-Type' : 'Application/json',
+                    'Accept' : 'Application/json',
+                    'Authorization' : `${this.token}`
+                },
+                body: JSON.stringify(doc)
+            });
+            const response = await res.json();
+
+            return response
         }
     }
 })
