@@ -1,5 +1,6 @@
 import { Router } from "express";
 import AuthController, { authController } from "../controller/AuthController";
+import { rolesMiddleware } from "../middleware/RolesMiddleware";
 
 class AuthRoutes {
   public path: string;
@@ -14,7 +15,7 @@ class AuthRoutes {
   }
 
   private initRoutes() {
-    this.router.post(`${this.path}/signup`, authController.signUp);
+    this.router.post(`${this.path}/signup`,rolesMiddleware.isAdmin, authController.signUp);
     this.router.post(`${this.path}/signin`, authController.signIn);
   }
 }

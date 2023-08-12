@@ -40,8 +40,8 @@
     <label>
       <select required class="input" v-model="votante.genero">
         <option value="">Selecciona un género</option>
-        <option value="1">Masculino</option>
-        <option value="2">Femenino</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
       </select>
     </label>
 
@@ -316,6 +316,7 @@ const removeRedSocial = (index) => {
 const handleComunaChange = async () => {
   const barrios = await getBarrios();
   const comuna = votante.value.comuna;
+  console.log(barrios);
   barriosComuna.value = await barrios.filter(
     (barrio) => barrio.comuna == comuna
   );
