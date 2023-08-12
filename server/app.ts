@@ -11,6 +11,7 @@ import cors from "cors";
 import { ConnectionDB } from "./db/ConnectionDB";
 import passport from "passport";
 import { authRoutes } from "./routes/AuthRoutes";
+import { authJWTMiddleware } from "./middleware/AuthJWTMiddleware";
 
 class App extends ConnectionDB {
   public app: Application;
@@ -79,7 +80,11 @@ class App extends ConnectionDB {
   private initRoutes(routes: RoutesInterface[]) {
     this.app.use(`/api/${env.API_VERSION}`, authRoutes.router);
     routes.forEach((route) => {
-      this.app.use(`/api/${env.API_VERSION}`, route.router);
+      this.app.use(
+        `/api/${env.API_VERSION}`,
+        authJWTMiddleware.validateToken,
+        route.router
+      );
     });
   }
 
