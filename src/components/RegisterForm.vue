@@ -4,34 +4,63 @@
         <p class="message">Registra un nuevo usuario o administrador. </p>
             <div class="flex">
             <label>
-                <input required placeholder="" type="text" class="input">
+                <input v-model="username" required placeholder="" type="text" class="input">
                 <span>Username</span>
             </label>
-    
+
             <label>
-                <input required placeholder="" type="text" class="input">
-                <span>Role</span>
+                <select v-model="role" required class="input">
+                  <option value="" disabled>Selecciona un rol</option>
+                  <option value="usuario">Usuario</option>
+                  <option value="admin">Administrador</option>
+                </select>
             </label>
         </div>
-    
+
         <label>
-            <input required placeholder="" type="email" class="input">
+            <input v-model="email" required placeholder="" type="email" class="input">
             <span>Email</span>
         </label>
-    
+
         <label>
-            <input required placeholder="" type="password" class="input">
+            <input v-model="password" required placeholder="" type="password" class="input">
             <span>Password</span>
         </label>
-        <label>
-            <input required placeholder="" type="password" class="input">
-            <span>Confirm password</span>
-        </label>
-        <button class="submit">Submit</button>
+        <button class="submit" type="submit" @click.prevent="createUser">Submit</button>
+        <p>{{ feeedback }}</p>
     </form>
 </template>
 
 <script setup lang="ts">
+import useAuth from '@/store/Auth';
+import {ref} from 'vue'
+
+const store = useAuth();
+const username = ref('');
+const email = ref('');
+const password = ref('');
+const role = ref('');
+const feeedback = ref('');
+
+console.log(username.value);
+
+
+const createUser = async () => {
+  try {
+
+    feeedback.value = "Comprobando..."
+    const response:any = await store.register(username.value, email.value, role.value, password.value);
+
+    if(response === false){
+      feeedback.value = "Error en el registro"
+    }else{
+      feeedback.value = "Usuario insertado Correctamente"
+    }
+
+  } catch (error) {
+    console.error(error);
+  }
+}
 </script>
 
 <style lang="scss">

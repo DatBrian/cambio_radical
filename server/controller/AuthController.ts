@@ -23,20 +23,21 @@ export class AuthController {
   public signIn = async (req: Request, res: Response) => {
     const { username, password } = req.body;
 
-    const data:any = await this.service.signIn({ username, password });
+    const data: any = await this.service.signIn({ username, password });
 
-    if(data[0]){
-      res.json(data)
+    if (data[0]) {
+      res.json(data);
+    } else {
+      const response = {
+        status: "Usuario encontrado :D",
+        token: data.token,
+        role: data.role,
+      };
+
+      res.json(response);
     }
-
-    const response = {
-      status: "Usuario encontrado :D",
-      token: data.token,
-      role: data.role
-    };
-
-    res.json(response);
   };
+
 }
 export default AuthController;
 export const authController = new AuthController();

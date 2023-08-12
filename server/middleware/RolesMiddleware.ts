@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { UsuarioModel } from "../model/UsuarioModel";
-// import { RoleModel } from "../model/RoleModel";
-// import { UsuarioModel } from "../model/UsuarioModel";
 
 class RolesMiddleware {
   public isAdmin = async (req: Request, res: Response, next: NextFunction) => {
@@ -18,7 +16,12 @@ class RolesMiddleware {
             .json({ error: "No tienes permisos para acceder a esta ruta" });
         }
       }
+    }else{
+      res
+      .status(400)
+      .json({ error: "Usuario no encontrado" });
     }
+
   };
 
   public isUser = async (req: Request, res: Response, next: NextFunction) => {

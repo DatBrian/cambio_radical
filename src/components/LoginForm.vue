@@ -44,26 +44,32 @@
         v-model="password"
       />
     </div>
-    <button type="submit" id="button" @click.prevent  ="authUser">Submit</button>
+    <button type="submit" id="button"  @click.prevent="loginUser">Submit</button>
+    <p>{{ feedback.value }}</p>
   </form>
 </template>
 
 <script setup lang="ts">
 import {Ref, ref} from 'vue';
-import AuthService from '@/services/AuthService'
+import useAuth from '@/store/Auth';
+import router from '@/router';
 
+const store = useAuth();
 const username:Ref<string> = ref("");
 const password:Ref<string> = ref("");
+const feedback = ref("");
 
-
-const authUser = async() => {
-  const auth = new AuthService();
-  const sucess = await auth.login(username.value, password.value);
-  if(sucess){
-    alert('Éxito')
-  }else{
-    alert('Incorrecto')
-  }
+const loginUser = async  ( )=>{
+  const response:any = await store.login(username.value, password.value)
+    if(response === false){
+      feedback.value = "Error Iniciando sesión"
+    }else{
+      if(store.role === "admin"){
+      router.push({name: 'list'})
+      }else if(store.role === "usuario"){
+        router.push({name: 'votante'})
+      }
+    }
 }
 
 </script>
