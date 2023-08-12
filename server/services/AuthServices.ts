@@ -36,24 +36,29 @@ class AuthServices {
   public async signIn(body: any) {
     const errors = [];
     const user: any = await this.repository.signIn(body);
-    const matchPassword = await UsuarioModel.schema.methods.matchPassword(
-      body.password,
-      user.password
-    );
-
+    
     if (!user) {
       errors.push({ text: "Usuario no encontrado :(" });
-    }
-    if (!matchPassword) {
-      errors.push({ text: "Contraseña incorrecta :(" });
+    }else{
+      const matchPassword = await UsuarioModel.schema.methods.matchPassword(
+        body.password,
+        user.password
+      );
+      if (!matchPassword) {
+        errors.push({ text: "Contraseña incorrecta :(" });
+      }
     }
 
     if (errors.length > 0) {
+      
       return errors;
     } else {
-      const token = generateToken({ id: user._id });
-
-      return token;
+      const token = await generateToken({ id: user._id });
+      const response = {
+        token: token,
+        role: user.role
+      };
+      return response;
     }
   }
 }

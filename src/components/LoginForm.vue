@@ -19,6 +19,7 @@
         class="inputField"
         id="username"
         placeholder="Username"
+        v-model="username"
       />
     </div>
 
@@ -40,13 +41,32 @@
         class="inputField"
         id="password"
         placeholder="Password"
+        v-model="password"
       />
     </div>
-    <button id="button">Submit</button>
+    <button type="submit" id="button" @click.prevent  ="authUser">Submit</button>
   </form>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import {Ref, ref} from 'vue';
+import AuthService from '@/services/AuthService'
+
+const username:Ref<string> = ref("");
+const password:Ref<string> = ref("");
+
+
+const authUser = async() => {
+  const auth = new AuthService();
+  const sucess = await auth.login(username.value, password.value);
+  if(sucess){
+    alert('Éxito')
+  }else{
+    alert('Incorrecto')
+  }
+}
+
+</script>
 
 <style scoped lang="scss">
 .form_main {

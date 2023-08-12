@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import AuthServices, { authServices } from "../services/AuthServices";
 import { Request, Response } from "express";
-// import passport from "passport";
 
 export class AuthController {
   private readonly service: AuthServices;
@@ -23,11 +22,19 @@ export class AuthController {
 
   public signIn = async (req: Request, res: Response) => {
     const { username, password } = req.body;
-    const token = await this.service.signIn({ username, password });
+
+    const data:any = await this.service.signIn({ username, password });
+
+    if(data[0]){
+      res.json(data)
+    }
+
     const response = {
       status: "Usuario encontrado :D",
-      token: token,
+      token: data.token,
+      role: data.role
     };
+
     res.json(response);
   };
 }
