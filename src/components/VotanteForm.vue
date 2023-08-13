@@ -350,43 +350,6 @@ const saveVotante = async () => {
   }
 };
 
-
-// const saveVotante = async () => {
-//   try {
-//     const doc = {
-//       doc: votante.value.doc,
-//     };
-//     const isVotanteExisting = await store.verifyDoc(doc);
-
-//     if (isVotanteExisting) {
-//       Swal.fire({
-//         icon: "error",
-//         title: `El votante con documento ${votante.value.doc} ya existe.`,
-//       });
-//     } else {
-//       const response = await store.saveVotante(votante.value);
-      
-//       if (response.ok) {
-//         Swal.fire({
-//           icon: "success",
-//           title: "Votante guardado exitosamente!",
-//         });
-//       } else {
-//         Swal.fire({
-//           icon: "error",
-//           title: "Error al guardar el votante.",
-//         });
-//       }
-//     }
-//   } catch (error: any) {
-//     Swal.fire({
-//       icon: "error",
-//       title: "Error al enviar la petición.",
-//       text: error.message,
-//     });
-//   }
-// };
-
 const addRedSocial = () => {
   redesSociales.value.push({ red: "", usuario: "" });
 };
