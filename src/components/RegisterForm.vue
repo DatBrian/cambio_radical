@@ -42,12 +42,7 @@ const password = ref('');
 const role = ref('');
 const feeedback = ref('');
 
-console.log(username.value);
-
-
 const createUser = async () => {
-  try {
-
     feeedback.value = "Comprobando..."
     const response:any = await store.register(username.value, email.value, role.value, password.value);
 
@@ -56,10 +51,6 @@ const createUser = async () => {
     }else{
       feeedback.value = "Usuario insertado Correctamente"
     }
-
-  } catch (error) {
-    console.error(error);
-  }
 }
 </script>
 

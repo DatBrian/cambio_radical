@@ -56,7 +56,6 @@ const deleteUser = async (votante) => {
   });
 
   if (result.isConfirmed) {
-    console.log(JSON.stringify(votanteID));
     await fetch("http://localhost:5000/api/v1/votante/delete", {
       method: "DELETE",
       headers: {
