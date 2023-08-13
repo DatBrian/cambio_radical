@@ -15,7 +15,7 @@
         <div class="sign">+</div>
       </button>
 
-      <button class="Btn">
+      <button class="Btn" @click="logout">
         <div class="sign">
           <svg viewBox="0 0 512 512">
             <path
@@ -30,12 +30,18 @@
 
 <script lang="ts" setup>
 import { defineEmits } from "vue";
+import router from '@/router';
+
 
 const emit = defineEmits(["showForm"]);
 
 const showForm = () => {
   emit("showForm");
 };
+
+const logout = () =>{
+  router.push('/login')
+}
 </script>
 
 <style scoped lang="scss">
