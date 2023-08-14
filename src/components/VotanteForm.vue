@@ -5,7 +5,7 @@
     <div class="flex">
       <label>
         <input
-          required
+          
           placeholder=""
           type="text"
           class="input"
@@ -16,7 +16,7 @@
 
       <label>
         <input
-          required
+          
           placeholder=""
           type="text"
           class="input"
@@ -28,7 +28,7 @@
 
     <label>
       <input
-        required
+        
         placeholder=""
         type="number"
         class="input"
@@ -38,7 +38,7 @@
     </label>
 
     <label>
-      <select required class="input" v-model="votante.genero">
+      <select  class="input" v-model="votante.genero">
         <option value="">Selecciona un género</option>
         <option value="Masculino">Masculino</option>
         <option value="Femenino">Femenino</option>
@@ -47,7 +47,7 @@
 
     <label>
       <input
-        required
+        
         placeholder="nacimiento"
         type="date"
         class="input"
@@ -56,7 +56,7 @@
     </label>
     <label>
       <input
-        required
+        
         placeholder=""
         type="number"
         class="input"
@@ -66,7 +66,7 @@
     </label>
     <label>
       <input
-        required
+        
         placeholder=""
         type="number"
         class="input"
@@ -76,7 +76,7 @@
     </label>
     <label>
       <input
-        required
+        
         placeholder=""
         type="text"
         class="input"
@@ -86,7 +86,7 @@
     </label>
     <label>
       <select
-        required
+        
         class="input"
         v-model="votante.comuna"
         @change="handleComunaChange"
@@ -102,7 +102,7 @@
       </select>
     </label>
     <label>
-      <select required class="input" v-model="votante.barrio">
+      <select  class="input" v-model="votante.barrio">
         <option disabled value="">Selecciona un barrio</option>
         <option v-for="barrio in barriosComuna" :key="barrio">
           {{ barrio.name }}
@@ -111,7 +111,7 @@
     </label>
     <label>
       <input
-        required
+        
         placeholder=""
         type="email"
         class="input"
@@ -121,7 +121,7 @@
     </label>
     <label>
       <input
-        required
+        
         placeholder=""
         type="text"
         class="input"
@@ -131,7 +131,7 @@
     </label>
     <label>
       <input
-        required
+        
         placeholder=""
         type="text"
         class="input"
@@ -151,14 +151,14 @@
       </button>
       <label v-for="(red, index) in redesSociales" :key="index">
         <input
-          required
+          
           placeholder="Red Social"
           type="text"
           class="input rs"
           v-model="red.red"
         />
         <input
-          required
+          
           placeholder="Username"
           type="text"
           class="input rs"
@@ -176,7 +176,7 @@
     </fieldset>
 
     <label>
-      <select required class="input" v-model="votante.PuestoVotacion">
+      <select  class="input" v-model="votante.PuestoVotacion">
         <option disabled value="">Selecciona un puesto de votación</option>
         <option v-for="puesto in puestoVotacion" :key="puesto">
           {{ puesto.name }}
@@ -185,7 +185,7 @@
     </label>
     <label>
       <input
-        required
+        
         placeholder=""
         type="number"
         class="input"
@@ -195,7 +195,7 @@
     </label>
     <label>
       <input
-        required
+        
         placeholder=""
         type="text"
         class="input"
