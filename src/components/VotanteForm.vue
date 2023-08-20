@@ -79,6 +79,7 @@
         @change="handleComunaChange"
       >
         <option disabled value="">Selecciona una comuna</option>
+        <option value="0">0</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -327,7 +328,7 @@ const saveVotante = async () => {
             MesaVotacion: "",
             compromiso: "",
             fidelidad: "",
-            observaciones: ""
+            observaciones: "",
           };
           redesSociales.value = [{ red: "", usuario: "" }];
         } else {
