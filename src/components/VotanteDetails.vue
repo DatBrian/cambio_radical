@@ -17,6 +17,7 @@
       <h3>Puesto de votación: {{ props.votante.PuestoVotacion }}</h3>
       <h3>Mesa de votación: {{ props.votante.MesaVotacion }}</h3>
       <h3>Compromiso: {{ props.votante.compromiso }}</h3>
+      <h3>Observaciones: {{ props.votante.observaciones }}}</h3>
     </div>
     <div id="buttons">
       <button @click="closeDetails">Cerrar</button>

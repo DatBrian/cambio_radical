@@ -5,7 +5,6 @@
     <div class="flex">
       <label>
         <input
-          
           placeholder=""
           type="text"
           class="input"
@@ -16,7 +15,6 @@
 
       <label>
         <input
-          
           placeholder=""
           type="text"
           class="input"
@@ -27,18 +25,12 @@
     </div>
 
     <label>
-      <input
-        
-        placeholder=""
-        type="number"
-        class="input"
-        v-model="votante.doc"
-      />
+      <input placeholder="" type="number" class="input" v-model="votante.doc" />
       <span>Documento</span>
     </label>
 
     <label>
-      <select  class="input" v-model="votante.genero">
+      <select class="input" v-model="votante.genero">
         <option value="">Selecciona un género</option>
         <option value="Masculino">Masculino</option>
         <option value="Femenino">Femenino</option>
@@ -47,7 +39,6 @@
 
     <label>
       <input
-        
         placeholder="nacimiento"
         type="date"
         class="input"
@@ -56,7 +47,6 @@
     </label>
     <label>
       <input
-        
         placeholder=""
         type="number"
         class="input"
@@ -66,7 +56,6 @@
     </label>
     <label>
       <input
-        
         placeholder=""
         type="number"
         class="input"
@@ -76,7 +65,6 @@
     </label>
     <label>
       <input
-        
         placeholder=""
         type="text"
         class="input"
@@ -86,7 +74,6 @@
     </label>
     <label>
       <select
-        
         class="input"
         v-model="votante.comuna"
         @change="handleComunaChange"
@@ -102,7 +89,7 @@
       </select>
     </label>
     <label>
-      <select  class="input" v-model="votante.barrio">
+      <select class="input" v-model="votante.barrio">
         <option disabled value="">Selecciona un barrio</option>
         <option v-for="barrio in barriosComuna" :key="barrio">
           {{ barrio.name }}
@@ -111,7 +98,6 @@
     </label>
     <label>
       <input
-        
         placeholder=""
         type="email"
         class="input"
@@ -121,7 +107,6 @@
     </label>
     <label>
       <input
-        
         placeholder=""
         type="text"
         class="input"
@@ -131,7 +116,6 @@
     </label>
     <label>
       <input
-        
         placeholder=""
         type="text"
         class="input"
@@ -151,14 +135,12 @@
       </button>
       <label v-for="(red, index) in redesSociales" :key="index">
         <input
-          
           placeholder="Red Social"
           type="text"
           class="input rs"
           v-model="red.red"
         />
         <input
-          
           placeholder="Username"
           type="text"
           class="input rs"
@@ -176,7 +158,7 @@
     </fieldset>
 
     <label>
-      <select  class="input" v-model="votante.PuestoVotacion">
+      <select class="input" v-model="votante.PuestoVotacion">
         <option disabled value="">Selecciona un puesto de votación</option>
         <option v-for="puesto in puestoVotacion" :key="puesto">
           {{ puesto.name }}
@@ -185,7 +167,6 @@
     </label>
     <label>
       <input
-        
         placeholder=""
         type="number"
         class="input"
@@ -195,7 +176,6 @@
     </label>
     <label>
       <input
-        
         placeholder=""
         type="text"
         class="input"
@@ -210,6 +190,15 @@
         <option value="en espera">En Espera</option>
       </select>
       <span>Fidelidad</span>
+    </label>
+    <label>
+      <input
+        placeholder=""
+        type="text"
+        class="input"
+        v-model="votante.observaciones"
+      />
+      <span>Observaciones</span>
     </label>
     <button class="submit">Submit</button>
     <a target="_blank" href="https://wsp.registraduria.gov.co/censo/consultar"
@@ -252,6 +241,7 @@ const votante: Ref<IVotante> = ref({
   MesaVotacion: "",
   compromiso: "",
   fidelidad: "",
+  observaciones: "",
 });
 
 const barriosComuna = ref([]);
@@ -279,7 +269,9 @@ const saveVotante = async () => {
           <p><strong>Lider:</strong> ${votante.value.lider}</p>
           <p><strong>Documento:</strong> ${votante.value.doc}</p>
           <p><strong>Género:</strong> ${votante.value.genero}</p>
-          <p><strong>Fecha de nacimiento:</strong> ${votante.value.nacimiento}</p>
+          <p><strong>Fecha de nacimiento:</strong> ${
+            votante.value.nacimiento
+          }</p>
           <p><strong>Celular:</strong> ${votante.value.celular}</p>
           <p><strong>Teléfono:</strong> ${votante.value.telefono}</p>
           <p><strong>Dirección:</strong> ${votante.value.direccion}</p>
@@ -288,13 +280,18 @@ const saveVotante = async () => {
           <p><strong>Email:</strong> ${votante.value.email}</p>
           <p><strong>Profesión:</strong> ${votante.value.profesion}</p>
           <p><strong>Ocupación:</strong> ${votante.value.ocupacion}</p>
-          <p><strong>Redes Sociales:</strong> ${JSON.stringify(votante.value.RS)}</p>
-          <p><strong>Puesto de votación:</strong> ${votante.value.PuestoVotacion}</p>
-          <p><strong>Mesa de votación:</strong> ${votante.value.MesaVotacion}</p>
+          <p><strong>Redes Sociales:</strong> ${JSON.stringify(
+            votante.value.RS
+          )}</p>
+          <p><strong>Puesto de votación:</strong> ${
+            votante.value.PuestoVotacion
+          }</p>
+          <p><strong>Mesa de votación:</strong> ${
+            votante.value.MesaVotacion
+          }</p>
           <p><strong>Compromiso:</strong> ${votante.value.compromiso}</p>
           <p><strong>Fidelidad:</strong> ${votante.value.fidelidad}</p>
-
-          <!-- Agrega los demás campos aquí -->
+          <p><strong>Observaciones:</strong> ${votante.value.observaciones}}</p>
         `,
         showCancelButton: true,
         confirmButtonText: "Confirmar",
@@ -302,44 +299,44 @@ const saveVotante = async () => {
       });
 
       if (confirmationResult.isConfirmed) {
-  const response = await store.saveVotante(votante.value);
-      
-  if (response.ok) {
-    Swal.fire({
-      icon: "success",
-      title: "Votante guardado exitosamente!",
-    });
+        const response = await store.saveVotante(votante.value);
 
-    // Restablecer los valores del formulario
-    votante.value = {
-      name: "",
-      lider: "",
-      doc: "",
-      genero: "",
-      nacimiento: "",
-      celular: "",
-      telefono: "",
-      direccion: "",
-      barrio: "",
-      comuna: "",
-      email: "",
-      profesion: "",
-      ocupacion: "",
-      RS: [{ red: "", usuario: "" }],
-      PuestoVotacion: "",
-      MesaVotacion: "",
-      compromiso: "",
-      fidelidad: "",
-    };
-    redesSociales.value = [{ red: "", usuario: "" }];
-  } else {
-    Swal.fire({
-      icon: "error",
-      title: "Error al guardar el votante.",
-    });
-  }
-}
+        if (response.ok) {
+          Swal.fire({
+            icon: "success",
+            title: "Votante guardado exitosamente!",
+          });
 
+          // Restablecer los valores del formulario
+          votante.value = {
+            name: "",
+            lider: "",
+            doc: "",
+            genero: "",
+            nacimiento: "",
+            celular: "",
+            telefono: "",
+            direccion: "",
+            barrio: "",
+            comuna: "",
+            email: "",
+            profesion: "",
+            ocupacion: "",
+            RS: [{ red: "", usuario: "" }],
+            PuestoVotacion: "",
+            MesaVotacion: "",
+            compromiso: "",
+            fidelidad: "",
+            observaciones: ""
+          };
+          redesSociales.value = [{ red: "", usuario: "" }];
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error al guardar el votante.",
+          });
+        }
+      }
     }
   } catch (error: any) {
     Swal.fire({
@@ -365,7 +362,6 @@ const handleComunaChange = async () => {
     (barrio) => barrio.comuna == comuna
   );
 };
-
 </script>
 
 <style scoped lang="scss">
