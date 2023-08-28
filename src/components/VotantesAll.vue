@@ -242,6 +242,7 @@ const getAllVotantes = async () => {
   data.value = await store.getVotantes(currentPage.value);
   votantes.value = await data.value.docs;
   currentPage.value = await data.value.page;
+  count.value = store.total;
 };
 
 const obtainVotantes = async (page: any) => {
@@ -290,8 +291,10 @@ const applyFilters = async () => {
       }
     }
     votantes.value = votantesFiltrados;
+    count.value = votantesFiltrados.length
   } else {
     votantes.value = votantesF;
+    count.value = votantes.value.length
   }
 };
 </script>
