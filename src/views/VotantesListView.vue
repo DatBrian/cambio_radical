@@ -6,11 +6,11 @@
         <RegisterForm />
       </div>
     </transition>
-    <transition name="slide">
+    <!-- <transition name="slide">
       <div id="SideBar">
         <FiltrosList />
       </div>
-    </transition>
+    </transition> -->
     <div id="votantes">
       <VotantesAll />
     </div>
@@ -20,11 +20,12 @@
 <script setup lang="ts">
 import RegisterForm from "../components/RegisterForm.vue";
 import NavBar from "../components/NavBar.vue";
-import FiltrosList from "../components/FiltrosList.vue";
 import VotantesAll from "../components/VotantesAll.vue";
 import { ref } from "vue";
 
 const showForm = ref(false);
+
+//Functions
 
 const toggleForm = () => {
   showForm.value = !showForm.value;
@@ -32,19 +33,6 @@ const toggleForm = () => {
 </script>
 
 <style scoped lang="scss">
-#container {
-  height: 100vh;
-  width: 100%;
-  background-color: $_blue;
-}
-
-#votantes {
-  display: flex;
-  margin-inline-start: 25%;
-  height: 100vh;
-  max-height: 100vh;
-  overflow: scroll;
-}
 
 #form {
   justify-content: center;
@@ -61,14 +49,6 @@ const toggleForm = () => {
   background-color: white;
 }
 
-#SideBar {
-  width: 25%;
-  display: flex;
-  height: 100%;
-  background-color: $gray;
-  position: absolute;
-  z-index: 5;
-}
 
 //* Animaciones
 @keyframes slide {

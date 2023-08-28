@@ -1,20 +1,11 @@
 <template>
   <nav id="nav-Bar">
     <div id="logo"></div>
-    <div id="buscador">
-      <input
-        type="text"
-        autocomplete="off"
-        name="text"
-        class="input"
-        placeholder="Nombre o Documento"
-      />
-    </div>
+    <div id="title">Lista de Votantes</div>
     <div id="buttons">
       <button class="Btn" id="register" @click="showForm">
         <div class="sign">+</div>
       </button>
-
       <button class="Btn" @click="logout">
         <div class="sign">
           <svg viewBox="0 0 512 512">
@@ -30,8 +21,7 @@
 
 <script lang="ts" setup>
 import { defineEmits } from "vue";
-import router from '@/router';
-
+import router from "@/router";
 
 const emit = defineEmits(["showForm"]);
 
@@ -39,18 +29,32 @@ const showForm = () => {
   emit("showForm");
 };
 
-const logout = () =>{
-  router.push('/login')
-}
+const logout = () => {
+  router.push("/login");
+};
 </script>
 
 <style scoped lang="scss">
+#title {
+  font-size: 3em;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  color: $_blue;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  padding: 0.5em 0;
+  border-bottom: 2px solid $_blue;
+  margin: 0;
+}
+
 #nav-Bar {
   padding-inline: em(1);
   padding-inline-end: em(5);
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-y: 20%;
 }
 
 #logo {

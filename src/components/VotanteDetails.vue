@@ -22,6 +22,7 @@
     <div id="buttons">
       <button @click="closeDetails">Cerrar</button>
       <button @click="deleteUser(props.votante)">Eliminar</button>
+      <button @click="editUser(props.votante)">Actualizar</button>
     </div>
   </div>
 </template>
@@ -29,10 +30,11 @@
 <script setup lang="ts">
 import Swal from "sweetalert2";
 import { defineProps, defineEmits } from "vue";
+import useAuth from "@/store/Auth";
 
+const store = useAuth();
 const props = defineProps({ votante: Object });
-
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "edit"]);
 
 const closeDetails = () => {
   emit("close");
@@ -57,16 +59,12 @@ const deleteUser = async (votante) => {
   });
 
   if (result.isConfirmed) {
-    await fetch("http://localhost:5000/api/v1/votante/delete", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "Application/json",
-      },
-      body: JSON.stringify(votanteID),
-    });
-
-    location.reload();
+    store.deleteVotante(votanteID);
   }
+};
+
+const editUser = async (votante: any) => {
+  emit("edit", votante);
 };
 </script>
 
@@ -108,7 +106,8 @@ button {
 }
 
 button:hover {
-  background-color: white;
-  color: black;
+  background-color: black;
+  color: white;
 }
 </style>
+@/store/AuthStore

@@ -44,34 +44,33 @@
         v-model="password"
       />
     </div>
-    <button type="submit" id="button"  @click.prevent="loginUser">Submit</button>
+    <button type="submit" id="button" @click.prevent="loginUser">Submit</button>
     <p>{{ feedback.value }}</p>
   </form>
 </template>
 
 <script setup lang="ts">
-import {Ref, ref} from 'vue';
-import useAuth from '@/store/Auth';
-import router from '@/router';
+import { Ref, ref } from "vue";
+import useAuth from "@/store/Auth";
+import router from "@/router";
 
 const store = useAuth();
-const username:Ref<string> = ref("");
-const password:Ref<string> = ref("");
+const username: Ref<string> = ref("");
+const password: Ref<string> = ref("");
 const feedback = ref("");
 
-const loginUser = async  ( )=>{
-  const response:any = await store.login(username.value, password.value)
-    if(response === false){
-      feedback.value = "Error Iniciando sesión"
-    }else{
-      if(store.role === "admin"){
-      router.push({name: 'list'})
-      }else if(store.role === "usuario"){
-        router.push({name: 'votante'})
-      }
+const loginUser = async () => {
+  const response: any = await store.login(username.value, password.value);
+  if (response === false) {
+    feedback.value = "Error Iniciando sesión";
+  } else {
+    if (store.role === "admin") {
+      router.push({ name: "list" });
+    } else if (store.role === "usuario") {
+      router.push({ name: "votante" });
     }
-}
-
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -192,3 +191,4 @@ const loginUser = async  ( )=>{
   }
 }
 </style>
+@/store/AuthStore
