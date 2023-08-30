@@ -81,6 +81,7 @@ const useAuth = defineStore("auth", {
         nextPage: response.nextPage,
         page: response.page,
         totalPages: response.totalPages,
+        limit:response.limit
       };
       return data;
     },

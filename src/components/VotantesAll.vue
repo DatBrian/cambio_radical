@@ -100,6 +100,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nombre</th>
                             <th>Líder</th>
                             <th>Documento</th>
@@ -121,10 +122,11 @@
                     </thead>
                     <tbody>
                         <tr
-                            v-for="votante in votantes"
+                            v-for="(votante, index) in votantes"
                             :key="votante.id"
                             @click="showDetails(votante)"
                         >
+                            <td>{{ rowCount + index }}</td>
                             <td>{{ votante.name }}</td>
                             <td>{{ votante.lider }}</td>
                             <td>{{ votante.doc }}</td>
@@ -205,6 +207,9 @@ const data: any = ref({
     totalPages: null,
 });
 
+let rowCount = ref(1);
+console.log(rowCount.value);
+
 const currentPage = ref(1);
 const filters = reactive({
     lider: "",
@@ -264,6 +269,8 @@ const obtainVotantes = async (page: any) => {
     data.value = await store.getVotantes(page);
     votantes.value = await data.value.docs;
     currentPage.value = await data.value.page;
+
+    rowCount.value = (currentPage.value - 1) * data.value.limit + 1;
 };
 
 const handleComunaChange = async () => {
