@@ -23,7 +23,7 @@
 
                 <div class="filter">
                     <label for="votingPlace">Puesto de Votación</label>
-                    <select id="votingPlace" v-model="filters.puestoVotacion">
+                    <select id="votingPlace" v-model="filters.PuestoVotacion">
                         <option disabled value="">
                             Selecciona un puesto de votación
                         </option>
@@ -210,7 +210,7 @@ const filters = reactive({
     lider: "",
     barrio: "",
     genero: "",
-    puestoVotacion: "",
+    PuestoVotacion: "",
     comuna: "",
     jovenes: false,
     terceraEdad: false,
@@ -290,7 +290,7 @@ const applyFilters = async () => {
     if (filters.lider) query.lider = filters.lider;
     if (filters.barrio) query.barrio = filters.barrio;
     if (filters.genero) query.genero = filters.genero;
-    if (filters.puestoVotacion) query.puestoVotacion = filters.puestoVotacion;
+    if (filters.PuestoVotacion) query.PuestoVotacion = filters.PuestoVotacion;
     if (filters.comuna) query.comuna = filters.comuna;
 
     const votantesF = await store.getVotantesF(query);
