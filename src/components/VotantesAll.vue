@@ -114,6 +114,7 @@
                     >
                         Ver Todos
                     </button>
+                    <button @click="cleanFilters">Reiniciar Filtros</button>
                     <button @click="generarExcel">Descargar Excel</button>
                 </div>
             </div>
@@ -336,6 +337,18 @@ const handleSearch = () => {
     }, 300);
 };
 
+const cleanFilters = async ()=>{
+  filters.lider = "";
+    filters.barrio = "";
+    filters.genero = "";
+    filters.PuestoVotacion = "";
+    filters.comuna = "";
+    filters.search = "";
+    filters.ocupacion = "";
+    filters.jovenes = false;
+    filters.terceraEdad = false;
+}
+
 const applyFilters = async () => {
     const query: any = {};
     if (filters.lider) query.lider = filters.lider;
@@ -367,15 +380,6 @@ const applyFilters = async () => {
         store.votantes = votantesF
     }
 
-        filters.lider = "";
-    filters.barrio = "";
-    filters.genero = "";
-    filters.PuestoVotacion = "";
-    filters.comuna = "";
-    filters.search = "";
-    filters.ocupacion = "";
-    filters.jovenes = false;
-    filters.terceraEdad = false;
 };
 </script>
 
