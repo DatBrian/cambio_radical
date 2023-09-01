@@ -8,8 +8,30 @@
                 </div>
 
                 <div class="filter">
+                    <label for="search">Nombre o Documento</label>
+                    <input
+                        id="search"
+                        v-model="filters.search"
+                        @input="handleSearch"
+                    />
+                </div>
+
+                <div class="filter">
                     <label for="leader">Líder</label>
-                    <input id="leader" v-model="filters.lider" />
+                    <input
+                        id="leader"
+                        v-model="filters.lider"
+                        @input="handleSearch"
+                    />
+                </div>
+
+                <div class="filter">
+                    <label for="leader">Ocupación</label>
+                    <input
+                        id="leader"
+                        v-model="filters.ocupacion"
+                        @input="handleSearch"
+                    />
                 </div>
 
                 <div class="filter">
@@ -92,6 +114,7 @@
                     >
                         Ver Todos
                     </button>
+                    <button @click="generarExcel">Descargar Excel</button>
                 </div>
             </div>
         </div>
@@ -195,6 +218,7 @@ import VotanteDetails from "./VotanteDetails.vue";
 import VotanteEdit from "./VotanteEdit.vue";
 import { Ref, ref, reactive, onMounted } from "vue";
 import useAuth from "@/store/Auth";
+import exportFromJSON from "export-from-json";
 
 const store = useAuth();
 let count: any = ref();
@@ -208,7 +232,6 @@ const data: any = ref({
 });
 
 let rowCount = ref(1);
-console.log(rowCount.value);
 
 const currentPage = ref(1);
 const filters = reactive({
@@ -219,6 +242,8 @@ const filters = reactive({
     comuna: "",
     jovenes: false,
     terceraEdad: false,
+    search: "",
+    ocupacion: "",
 });
 
 const votantes: Ref<any[]> = ref([]);
@@ -235,6 +260,7 @@ onMounted(async () => {
     puestoVotacion.value = await store.getPuestos();
     await store.getCount();
     count.value = store.total;
+    await store.getAllVotantes();
 });
 
 //functions
@@ -263,14 +289,15 @@ const getAllVotantes = async () => {
     votantes.value = await data.value.docs;
     currentPage.value = await data.value.page;
     count.value = store.total;
+    await store.getAllVotantes();
 };
 
 const obtainVotantes = async (page: any) => {
     data.value = await store.getVotantes(page);
     votantes.value = await data.value.docs;
     currentPage.value = await data.value.page;
-
     rowCount.value = (currentPage.value - 1) * data.value.limit + 1;
+    await store.getAllVotantes();
 };
 
 const handleComunaChange = async () => {
@@ -292,6 +319,23 @@ const calcularEdad = (fecha: string) => {
     return result;
 };
 
+const generarExcel = () => {
+    const data = store.votantes;
+    const fileName = "votantes";
+    const exportType = "xls";
+    exportFromJSON({ data, fileName, exportType });
+};
+
+let timeoutId;
+
+const handleSearch = () => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => {
+        applyFilters();
+    }, 300);
+};
+
 const applyFilters = async () => {
     const query: any = {};
     if (filters.lider) query.lider = filters.lider;
@@ -299,6 +343,8 @@ const applyFilters = async () => {
     if (filters.genero) query.genero = filters.genero;
     if (filters.PuestoVotacion) query.PuestoVotacion = filters.PuestoVotacion;
     if (filters.comuna) query.comuna = filters.comuna;
+    if (filters.search) query.search = filters.search;
+    if (filters.ocupacion) query.ocupacion = filters.ocupacion;
 
     const votantesF = await store.getVotantesF(query);
     if (filters.jovenes || filters.terceraEdad) {
@@ -314,10 +360,22 @@ const applyFilters = async () => {
         }
         votantes.value = votantesFiltrados;
         count.value = votantesFiltrados.length;
+        store.votantes = votantesFiltrados;
     } else {
         votantes.value = votantesF;
         count.value = votantes.value.length;
+        store.votantes = votantesF
     }
+
+        filters.lider = "";
+    filters.barrio = "";
+    filters.genero = "";
+    filters.PuestoVotacion = "";
+    filters.comuna = "";
+    filters.search = "";
+    filters.ocupacion = "";
+    filters.jovenes = false;
+    filters.terceraEdad = false;
 };
 </script>
 
@@ -329,7 +387,7 @@ const applyFilters = async () => {
 }
 
 #main {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     background-color: $_blue;
 }
@@ -343,13 +401,14 @@ const applyFilters = async () => {
 }
 
 #container {
+    height: 200vh;
     width: 100%;
 }
 
 #sidebar {
     width: 25%;
     display: flex;
-    height: 100%;
+    height: max-content;
     background-color: $gray;
     position: absolute;
     z-index: 5;

@@ -6,6 +6,7 @@ const useAuth = defineStore("auth", {
       total: "",
       token: null,
       role: null,
+      votantes: [],
       baseURL: 'https://cambioradicalserver.up.railway.app/api/v1'
       // baseURL: "http://localhost:5000/api/v1",
     };
@@ -64,8 +65,21 @@ const useAuth = defineStore("auth", {
         return true;
       }
     },
+    async getAllVotantes() {
+      const uri = `${this.baseURL}/votante/all`;
+      const res = await fetch(uri, {
+        method: "GET",
+        headers: {
+          "Content-Type": "Application/json",
+          Accept: "Application/json",
+          Authorization: `${this.token}`
+        }
+      });
+      const response = await res.json();
+      this.votantes = response;
+    },
     async getVotantes(page: any) {
-      const uri = `${this.baseURL}/votante/all?page=${page}`;
+      const uri = `${this.baseURL}/votante/filter?page=${page}`;
       const res = await fetch(uri, {
         method: "GET",
         headers: {
@@ -176,7 +190,7 @@ const useAuth = defineStore("auth", {
         headers: {
           "Content-Type": "Application/json",
           Accept: "Application/json",
-          Authorization: `${useAuth().token}`,
+          Authorization: `${this.token}`,
         },
       });
       const response = await res.json();
