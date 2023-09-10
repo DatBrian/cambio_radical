@@ -18,11 +18,12 @@
 
                 <div class="filter">
                     <label for="leader">Líder</label>
-                    <input
-                        id="leader"
-                        v-model="filters.lider"
-                        @input="handleSearch"
-                    />
+                    <select v-model="filters.lider" class="input">
+                        <option disabled>Seleccione un líder</option>
+                        <option v-for="lider in lideres" :key="lider">
+                            {{ lider }}
+                        </option>
+                    </select>
                 </div>
 
                 <div class="filter">
@@ -252,6 +253,7 @@ const barriosComuna = ref([]);
 const puestoVotacion = ref([]);
 const showEditFlag: Ref<boolean> = ref(false);
 const showDetailsFlag: Ref<boolean> = ref(false);
+const lideres = ref([]);
 
 onMounted(async () => {
     const votantesList = await store.getVotantes(currentPage.value);
@@ -261,6 +263,7 @@ onMounted(async () => {
     await store.getCount();
     count.value = store.total;
     await store.getAllVotantes();
+    lideres.value = await store.getLideres();
 });
 
 //functions
@@ -364,10 +367,10 @@ const applyFilters = async () => {
     } else {
         votantes.value = votantesF;
         count.value = votantes.value.length;
-        store.votantes = votantesF
+        store.votantes = votantesF;
     }
 
-        filters.lider = "";
+    filters.lider = "";
     filters.barrio = "";
     filters.genero = "";
     filters.PuestoVotacion = "";
@@ -401,7 +404,7 @@ const applyFilters = async () => {
 }
 
 #container {
-    height: 200vh;
+    height: max-content;
     width: 100%;
 }
 
@@ -419,14 +422,13 @@ const applyFilters = async () => {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999;
     opacity: 0;
-    overflow-y: scroll;
     animation: aparecer 0.5s forwards;
 }
 
@@ -436,11 +438,13 @@ const applyFilters = async () => {
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     max-width: 80%;
+    height: max-content;
 }
 
 .edit {
+    height: 100vh;
     background-color: $blue !important;
-    margin-top: 50%;
+    overflow-y: scroll;
 }
 
 .modal-enter-active,
@@ -583,5 +587,13 @@ input[type="checkbox"] {
 
 .apply-button:hover {
     background-color: #0056b3;
+}
+
+.input {
+    width: 100%;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 </style>
