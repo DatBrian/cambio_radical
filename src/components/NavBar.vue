@@ -15,7 +15,14 @@
           </svg>
         </div>
       </button>
+      <button class="Btn" @click="showBarrio">
+      <div class="sign">B</div>
+    </button>
+    <button class="Btn" @click="showPuesto">
+      <div class="sign">P</div>
+    </button>
     </div>
+    
   </nav>
 </template>
 
@@ -23,11 +30,19 @@
 import { defineEmits } from "vue";
 import router from "@/router";
 
-const emit = defineEmits(["showForm"]);
+const emit = defineEmits(["showForm", "showBarrio", "showPuesto"]);
 
 const showForm = () => {
   emit("showForm");
 };
+
+const showBarrio = () => {
+  emit("showBarrio");
+}
+
+const showPuesto = () => {
+  emit("showPuesto");
+}
 
 const logout = () => {
   router.push("/login");

@@ -194,7 +194,7 @@
                         </div>
                     </div>
                 </transition>
-                <div id="buttons">
+                <div id="buttons" v-if="buttons">
                     <button
                         id="prevButton"
                         class="button"
@@ -255,6 +255,7 @@ const puestoVotacion = ref([]);
 const showEditFlag: Ref<boolean> = ref(false);
 const showDetailsFlag: Ref<boolean> = ref(false);
 const lideres = ref([]);
+const buttons = ref(false);
 
 onMounted(async () => {
     const votantesList = await store.getVotantes(currentPage.value);
@@ -265,6 +266,7 @@ onMounted(async () => {
     count.value = store.total;
     await store.getAllVotantes();
     lideres.value = await store.getLideres();
+    buttons.value = true;
 });
 
 //functions
@@ -294,6 +296,8 @@ const getAllVotantes = async () => {
     currentPage.value = await data.value.page;
     count.value = store.total;
     await store.getAllVotantes();
+    await cleanFilters();
+    buttons.value = true;
 };
 
 const obtainVotantes = async (page: any) => {
@@ -302,6 +306,7 @@ const obtainVotantes = async (page: any) => {
     currentPage.value = await data.value.page;
     rowCount.value = (currentPage.value - 1) * data.value.limit + 1;
     await store.getAllVotantes();
+    buttons.value = true;
 };
 
 const handleComunaChange = async () => {
@@ -350,6 +355,8 @@ const cleanFilters = async ()=>{
     filters.ocupacion = "";
     filters.jovenes = false;
     filters.terceraEdad = false;
+
+    buttons.value = true;
 }
 
 const applyFilters = async () => {
@@ -382,8 +389,7 @@ const applyFilters = async () => {
         count.value = votantes.value.length;
         store.votantes = votantesF;
     }
-
-    await cleanFilters();
+    buttons.value = false;
 };
 </script>
 
@@ -432,7 +438,7 @@ const applyFilters = async () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 10;
     opacity: 0;
     animation: aparecer 0.5s forwards;
 }

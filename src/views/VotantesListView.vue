@@ -1,38 +1,86 @@
 <template>
     <div id="container">
-        <NavBar @showForm="toggleForm" />
-        <transition name="slide-in">
-            <div id="form" v-if="showForm">
-                <RegisterForm />
-            </div>
-        </transition>
-        <!-- <transition name="slide">
-      <div id="SideBar">
-        <FiltrosList />
-      </div>
-    </transition> -->
-        <div id="votantes">
-            <VotantesAll />
+      <NavBar @showForm="toggleForm" @showBarrio="toggleBarrio" @showPuesto="togglePuesto" />
+      <div class="background-layer" @click="closeModals" :class="{ 'visible': backgroundVisible }"></div>      <transition name="slide-in">
+        <div id="form" v-if="showForm">
+          <RegisterForm />
         </div>
+      </transition>
+      <transition name="slide">
+        <div id="form" v-if="showBarrios">
+          <BarrioForm />
+        </div>
+      </transition>
+      <transition name="slide">
+        <div id="form" v-if="showPuestos">
+          <PuestoForm />
+        </div>
+      </transition>
+      <div id="votantes">
+        <VotantesAll />
+      </div>
     </div>
-</template>
+  </template>
+
 
 <script setup lang="ts">
 import RegisterForm from "../components/RegisterForm.vue";
+import BarrioForm from "@/components/BarrioForm.vue";
+import PuestoForm from "@/components/PuestoForm.vue";
 import NavBar from "../components/NavBar.vue";
 import VotantesAll from "../components/VotantesAll.vue";
 import { ref } from "vue";
 
 const showForm = ref(false);
+const showBarrios = ref(false);
+const showPuestos = ref(false);
+const backgroundVisible = ref(false);
 
 //Functions
 
 const toggleForm = () => {
     showForm.value = !showForm.value;
+    backgroundVisible.value = showForm.value;
 };
+
+const toggleBarrio = () => {
+    showBarrios.value = !showBarrios.value;
+    backgroundVisible.value = showBarrios.value;
+}
+
+const togglePuesto = () => {
+    showPuestos.value = !showPuestos.value;
+    backgroundVisible.value = showPuestos.value;
+}
+
+const closeModals = () => {
+  showForm.value = false;
+  showBarrios.value = false;
+  showPuestos.value = false;
+  backgroundVisible.value = false;
+};
+
 </script>
 
 <style scoped lang="scss">
+
+.background-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad aquí */
+  opacity: 0; /* Inicialmente invisible */
+  z-index: 15; /* Detrás de los modales */
+  pointer-events: none; /* Evita que intercepte clics cuando está oculto */
+  transition: opacity 0.3s ease; /* Agrega una transición de opacidad */
+}
+
+.background-layer.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 #form {
     justify-content: center;
@@ -40,7 +88,7 @@ const toggleForm = () => {
     margin: auto;
     width: 100%;
     position: absolute;
-    z-index: 2;
+    z-index: 20;
 }
 
 #nav-Bar {

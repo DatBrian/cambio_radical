@@ -101,35 +101,6 @@
                     {{ barrio.name }}
                 </option>
             </select>
-            <button @click="handleBarrio" type="button" class="add-button">
-                Agregar Barrio
-            </button>
-            <div class="crearBarrio" v-if="addBarrio">
-                <label for="">
-                    <input
-                        class="input"
-                        v-model="barrio.name"
-                        type="text"
-                        placeholder="Nombre"
-                    />
-                </label>
-                <label>
-                    <select class="input" v-model="barrio.comuna">
-                        <option disabled value="">Selecciona una comuna</option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                    </select>
-                </label>
-                <button type="button" class="add-button" @click="saveBarrio">
-                    Crear
-                </button>
-            </div>
         </label>
         <label>
             <input
@@ -203,32 +174,6 @@
                     {{ puesto.name }}
                 </option>
             </select>
-            <button @click="handlePuesto" type="button" class="add-button">
-                Agregar Puesto
-            </button>
-            <div class="crearBarrio" v-if="addPuesto">
-                <label for="">
-                    <input
-                        class="input"
-                        v-model="puesto.name"
-                        type="text"
-                        placeholder="Nombre"
-                    />
-                </label>
-
-                <label for="">
-                    <input
-                        class="input"
-                        v-model="puesto.zona"
-                        type="text"
-                        placeholder="Zona"
-                    />
-                </label>
-
-                <button type="button" class="add-button" @click="savePuesto">
-                    Crear
-                </button>
-            </div>
         </label>
         <label>
             <input
@@ -286,17 +231,6 @@ onMounted(async () => {
     puestoVotacion.value = await store.getPuestos();
 });
 
-const addBarrio = ref(false);
-const addPuesto = ref(false);
-
-const handleBarrio = () => {
-    addBarrio.value = !addBarrio.value;
-};
-
-const handlePuesto = () => {
-    addPuesto.value = true;
-};
-
 const redesSociales = ref([{ red: "", usuario: "" }]);
 
 const votante: Ref<any> = ref({
@@ -321,108 +255,9 @@ const votante: Ref<any> = ref({
     observaciones: "",
 });
 
-const barrio = ref({
-    name: "",
-    comuna: "",
-});
-
-const puesto = ref({
-    name: "",
-    zona: "",
-});
-
 const barriosComuna = ref([]);
 
-//*Functions
-
-const savePuesto = async () => {
-    try {
-        const newPuesto = {
-            name: puesto.value.name,
-        };
-
-        const puestoExist = await store.verifyPuesto(newPuesto);
-
-        if (puestoExist) {
-            Swal.fire({
-                icon: "error",
-                title: `El puesto ${newPuesto.name} ya existe`,
-            });
-        } else {
-            const response = await store.savePuesto(puesto.value);
-
-            if (response.ok) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Puesto guardado exitosamente!",
-                });
-
-                puesto.value = {
-                    name: "",
-                    zona: "",
-                };
-
-                handlePuesto();
-                puestoVotacion.value = await store.getPuestos(); 
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error al guardar el puesto.",
-                });
-            }
-        }
-    } catch (error: any) {
-        Swal.fire({
-            icon: "error",
-            title: "Error al enviar la petición.",
-            text: error.message,
-        });
-    }
-};
-
-const saveBarrio = async () => {
-    try {
-        const newBarrio = {
-            name: barrio.value.name,
-        };
-
-        const barrioExist = await store.verifyBarrio(newBarrio);
-
-        if (barrioExist) {
-            Swal.fire({
-                icon: "error",
-                title: `El barrio ${newBarrio.name} ya existe`,
-            });
-        } else {
-            const response = await store.saveBarrio(barrio.value);
-
-            if (response.ok) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Barrio guardado exitosamente!",
-                });
-
-                barrio.value = {
-                    name: "",
-                    comuna: "",
-                };
-
-                handleBarrio();
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error al guardar el barrio.",
-                });
-            }
-        }
-    } catch (error: any) {
-        Swal.fire({
-            icon: "error",
-            title: "Error al enviar la petición.",
-            text: error.message,
-        });
-    }
-};
+//Functions
 
 const saveVotante = async () => {
     try {

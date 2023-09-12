@@ -8,7 +8,7 @@ const useAuth = defineStore("auth", {
             role: null,
             votantes: [],
             baseURL: 'https://cambioradicalserver.up.railway.app/api/v1'
-            // baseURL: "http://localhost:5000/api/v1",
+            //  baseURL: "http://localhost:5000/api/v1",
         };
     },
     actions: {
@@ -97,6 +97,15 @@ const useAuth = defineStore("auth", {
                 totalPages: response.totalPages,
                 limit: response.limit,
             };
+
+            await data.docs.forEach((item) => {
+                if(item.nacimiento){
+                    item.nacimiento = item.nacimiento.split("T")[0];
+                }
+
+                delete item.updatedAt;
+            })
+            this.votantes = data.docs;
             return data;
         },
         async getPuestos() {
