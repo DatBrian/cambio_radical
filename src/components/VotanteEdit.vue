@@ -238,6 +238,7 @@ const barriosComuna = ref([]);
 onMounted(async () => {
   puestoVotacion.value = await store.getPuestos();
   editedVotante.value = { ...props.votante };
+  await handleComunaChange();
 });
 
 //Functions
